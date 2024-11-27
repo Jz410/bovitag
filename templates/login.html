@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="Login-all">
+    <div class="ImgContainer">
+        <img src="static/img/MAG.png" alt="logo">
+        <p class="parrafo">Dirección General De Ganadería</p>
+    </div>
+    <form action="/login" class="login">
+        <label for="user">User</label>
+        <input type="text" placeholder="Ingrese Un Usuario" autofocus>
+        <label for="password">Password</label>
+        <input type="password" placeholder="Ingrese su contraseña" required>
+        <button>Login</button>
+    </form>
+</div>
+{% endblock content %}
