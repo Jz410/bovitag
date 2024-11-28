@@ -1,17 +1,29 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<div class="Login-all">
-    <div class="ImgContainer">
-        <img src="static/img/MAG.png" alt="logo">
-        <p class="parrafo">Dirección General De Ganadería</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
+    <title>Document</title>
+</head>
+
+<body style="overflow: hidden;">
+
+
+    <div class="Login-all">
+        <div class="ImgContainer">
+            <img src="static/img/MAG.png" alt="logo">
+            <p class="parrafo">Dirección General De Ganadería</p>
+        </div>
+        <form action="/login" class="login">
+            <label for="user">User</label>
+            <input type="text" name="user" placeholder="Ingrese Un Usuario" autofocus>
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Ingrese su contraseña" required>
+            <button>Login</button>
+        </form>
     </div>
-    <form action="/login" class="login">
-        <label for="user">User</label>
-        <input type="text" placeholder="Ingrese Un Usuario" autofocus>
-        <label for="password">Password</label>
-        <input type="password" placeholder="Ingrese su contraseña" required>
-        <button>Login</button>
-    </form>
-</div>
-{% endblock content %}
+</body>
+
+</html>
