@@ -20,5 +20,10 @@ def inicio():
     
     return render_template('login.html', titulo=titulo)
 
+@app.route('/generador')
+def Generador():
+    titulo:str = 'Generador de Img'
+    return render_template('Generador.html',titulo=titulo )
+
 if __name__ == '__main__':
     app.run(debug=True)
