@@ -22,17 +22,34 @@
             <button type="submit">Login</button>
         </form>
 
-        <!-- Mostrar mensajes flash -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <ul>
-            {% for category, message in messages %}
-            <li class="{{ category }}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
     </div>
+    <!-- Mensajes flash como ventana flotante -->
+<div id="flash-messages" class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message {{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<script>
+    // Espera a que la página cargue
+    document.addEventListener('DOMContentLoaded', () => {
+        const messages = document.querySelectorAll('.flash-message');
+        messages.forEach((message) => {
+            // Eliminar mensaje después de 5.5 segundos
+            setTimeout(() => {
+                message.remove();
+            }, 5500);
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

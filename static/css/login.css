@@ -128,3 +128,55 @@
         overflow: hidden;
     }
 }
+
+
+/* Contenedor de mensajes flash */
+.flash-container {
+    position: fixed;
+    top: 25px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilo de los mensajes */
+.flash-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: white;
+    animation: fadeOut 5s ease forwards; /* Se desvanece después de 5 segundos */
+}
+
+/* Colores según categoría */
+.flash-message.success {
+    background-color: #4caf50; /* Verde para éxito */
+}
+
+.flash-message.danger {
+    background-color: #f44336; /* Rojo para error */
+}
+
+.flash-message.warning {
+    background-color: #ff9800; /* Naranja para advertencias */
+}
+
+.flash-message.info {
+    background-color: #2196f3; /* Azul para información */
+}
+
+/* Animación de desvanecimiento */
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}

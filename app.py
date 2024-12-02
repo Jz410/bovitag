@@ -1,9 +1,10 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from key import key
 
 app = Flask(__name__)
-app.secret_key = "mi_secreto_seguro"
+app.secret_key = key
 
 # Funciones para la base de datos
 def get_db_connection():
@@ -52,6 +53,10 @@ def dashboard():
 
 @app.route('/generador')
 def Generador():
+    if 'user_id' not in session:
+        flash("Debes iniciar sesión para acceder al Generador", "warning")
+        return redirect('/login')
+    
     titulo:str = 'Generador de Img'
     return render_template('Generador.html',titulo=titulo )
 
