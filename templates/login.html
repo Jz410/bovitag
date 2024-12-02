@@ -4,25 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css')}}">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <title>{{ titulo }}</title>
 </head>
 
 <body style="overflow: hidden;">
-
-
     <div class="Login-all">
         <div class="ImgContainer">
-            <img src="static/img/MAG.png" alt="logo">
+            <img src="{{ url_for('static', filename='img/MAG.png') }}" alt="logo">
             <p class="parrafo">Dirección General De Ganadería</p>
         </div>
-        <form action="/login" class="login">
+        <form action="/login" method="POST" class="login">
             <label for="user">User</label>
-            <input type="text" name="user" placeholder="Ingrese Un Usuario" autofocus>
+            <input type="text" name="user" placeholder="Ingrese un usuario" autofocus required>
             <label for="password">Password</label>
             <input type="password" name="password" placeholder="Ingrese su contraseña" required>
-            <button>Login</button>
+            <button type="submit">Login</button>
         </form>
+
+        <!-- Mostrar mensajes flash -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <ul>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
     </div>
 </body>
 

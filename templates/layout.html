@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Generador.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Global.css')}}">
     <title>{{ titulo }}</title>
 </head>
 
@@ -15,6 +16,37 @@
             <!--Contenido se mostrara aquí-->
         {% endblock%}
     </main>
+
+    <footer class="footer">
+        <section class="Informacion">
+            
+            <p>
+                <img src="{{ url_for('static', filename='Img/favicon.ico')}}" alt="" class="Logito"> Esta página web ha sido desarrollada por el equipo de desarrollo Jz Company Sv.
+                Para obtener más información sobre nuestro equipo y servicios, visita el siguiente enlace: <a href="https://maps.app.goo.gl/kuXwjRXEWtRBxndv6" target="_blank">Jz Company Sv</a>.
+            </p>
+            <p>
+                Nuestro objetivo es ofrecer soluciones tecnológicas personalizadas, facilitando a nuestros clientes potenciales la oportunidad de contratarnos o solicitar información sobre nuestros servicios y programas de desarrollo.
+            </p>
+        </section>
+        <section class="Contacto">
+            <div class="Info">
+                <span>Redes sociales</span>
+                <a href="">Git Hub</a>
+                <a href="">Empresa</a>
+            </div>
+            <div class="Info">
+                <span>Personal</span>
+                <a href="">Nioy</a>
+                <a href="">Ezxquiel</a>
+                <a href="">Minnifinnex</a>
+            </div>
+            
+
+            <div class="Proxi">
+                <a>Próximamente</a>
+            </div>
+        </section>
+    </footer>
 </body>
 
 </html>
