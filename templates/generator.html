@@ -90,8 +90,8 @@
     <form action="{{ url_for('generator') }}" method="post">
         <div class="form-group">
             <label for="input_folder">Ruta de Entrada:</label>
-            <input type="text" id="input_folder" name="input_folder" required 
-                   placeholder="Enter full path to input folder">
+            <input type="file" id="input_folder" name="input_folder" required 
+                   placeholder="Enter full path to input folder" webkitdirectory directory >
         </div>
         
         <div class="form-group">
