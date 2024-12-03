@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .preview-image {
+            max-width: 150px;
+            max-height: 150px;
+            object-fit: contain;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to list files in a directory
+        function listFiles() {
+            const folderInput = document.getElementById('input_folder');
+            const previewContainer = document.getElementById('preview-container');
+            
+            // Clear previous previews
+            previewContainer.innerHTML = '';
+            
+            // Send AJAX request to list files
+            fetch('/list_files?folder=' + encodeURIComponent(folderInput.value))
+                .then(response => response.json())
+                .then(files => {
+                    if (files.length === 0) {
+                        previewContainer.innerHTML = '<p>No image files found in the specified folder.</p>';
+                        return;
+                    }
+                    
+                    files.slice(0, 10).forEach(file => {
+                        const img = document.createElement('img');
+                        img.src = '/get_image_preview?folder=' + encodeURIComponent(folderInput.value) + '&filename=' + encodeURIComponent(file);
+                        img.classList.add('preview-image');
+                        img.alt = file;
+                        previewContainer.appendChild(img);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    previewContainer.innerHTML = '<p>Error loading previews. Check the folder path.</p>';
+                });
+        }
+
+        // Add event listener to trigger file listing
+        const folderInput = document.getElementById('input_folder');
+        folderInput.addEventListener('change', listFiles);
+    });
+    </script>
+</head>
+<body>
+    <h1>Procesar Imagenes</h1>
+    <form action="{{ url_for('generator') }}" method="post">
+        <div class="form-group">
+            <label for="input_folder">Ruta de Entrada:</label>
+            <input type="text" id="input_folder" name="input_folder" required 
+                   placeholder="Enter full path to input folder">
+        </div>
+        
+        <div class="form-group">
+            <label for="start_number">Numero de Inicio:</label>
+            <input type="number" id="start_number" name="start_number" 
+                   value="2701" required>
+        </div>
+        
+        <div id="preview-container" class="preview-container">
+            <p>Introduzca una ruta para ver una vista previa de la imagen</p>
+        </div>
+        
+        <button type="submit">Procesar Imagenes</button>
+    </form>
+    
+    <div>
+        <h2>Detalles de La Configuración</h2>
+        <p>Output Folder: {{ config.output_folder }}</p>
+        <p>Output Image Size: {{ config.output_size_width }} x {{ config.output_size_height }}</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- templates/select_images.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar imágenes generadas</title>
+</head>
+<body>
+    <h1>Seleccionar imágenes generadas</h1>
+    
+    <form action="/move_images" method="post">
+        {% for image in images %}
+            <div>
+                <input type="checkbox" name="selected_images" value="{{ image }}">
+                <label for="selected_images">{{ image }}</label><br>
+                <img src="{{ url_for('get_image_preview', filename=image, folder=output_folder) }}" alt="{{ image }}" width="150px">
+            </div>
+        {% endfor %}
+        
+        <label for="custom_folder">Carpeta personalizada (opcional):</label>
+        <input type="file" name="custom_folder" webkitdirectory directory id="custom_folder"><br>
+
+        
+        <input type="hidden" name="output_folder" value="{{ output_folder }}">
+        <button type="submit">Mover imágenes seleccionadas</button>
+    </form>
+    
+</body>
+</html>
