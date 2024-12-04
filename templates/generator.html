@@ -1,6 +1,7 @@
 {% extends 'layout.html'%}
 {% block content %}
 <h1>Procesar Imagenes</h1>
+
 <form action="{{ url_for('generator.generator') }}" method="post">
     <div class="form-group">
         <label for="input_folder">Ruta de Entrada:</label>
@@ -24,6 +25,8 @@
     <p>Output Folder: {{ config.output_folder }}</p> 
     <p>Output Image Size: {{ config.output_size_width }} x {{ config.output_size_height }}</p>
 </div>
+
+
 
 
 <script src="{{ url_for('static', filename='js/generator.js') }}"></script>

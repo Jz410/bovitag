@@ -1,9 +1,11 @@
 import os
 import cv2
 import numpy as np
-from flask import Blueprint, render_template, request, send_from_directory
+from flask import Blueprint, render_template, request, send_from_directory, session, flash
 from .config import load_config 
 from routes.admin import admin_bp
+from werkzeug.security import generate_password_hash, check_password_hash
+import time
 
 generator_bp = Blueprint('generator', __name__)
 files_bp = Blueprint('files', __name__)
@@ -47,6 +49,11 @@ def get_image_preview(filename):
 
 @generator_bp.route('/generator', methods=['GET', 'POST'])
 def generator():
+
+    if 'user_id' not in session:
+        flash("Debes iniciar sesión para ", "warning")
+        return redirect('/login')
+
     config = load_config()  # Cargar la configuración
     
     if request.method == 'POST':
@@ -133,4 +140,4 @@ def move_images():
         dest_path = os.path.join(destination_folder, image_name)
         os.rename(src_path, dest_path)
     
-    return f"¡Imágenes movidas a {destination_folder}!"
+    return render_template('generator.html')

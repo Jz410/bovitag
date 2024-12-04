@@ -1,59 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'layout.html' %}
+{% block content %}
     <title>Administración</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <h1>Configuración de Procesamiento de Imagenes</h1>
-    <form action="{{ url_for('admin.admin') }}" method="post">
-        <div class="form-group">
-            <label for="output_folder">Ruta de Salida:</label>
-            <input type="text" id="output_folder" name="output_folder" 
-                   value="{{ config.output_folder }}" required>
+
+
+    <div class="admin-wrapper">
+        <div class="admin-panel">
+            <div class="panel-header">
+                <h1 class="panel-title">Configuración de Procesamiento</h1>
+                <p class="panel-subtitle">Ajuste los parámetros de procesamiento de imágenes</p>
+            </div>
+            
+            <form action="{{ url_for('admin.admin') }}" method="post">
+                <div class="form-group">
+                    <label for="output_folder" class="form-label">Ruta de Salida</label>
+                    <input type="text" id="output_folder" name="output_folder" 
+                           class="form-input" value="{{ config.output_folder }}" 
+                           placeholder="/path/to/output/folder" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="output_size_width" class="form-label">Ancho de Imagen</label>
+                    <input type="number" id="output_size_width" name="output_size_width" 
+                           class="form-input" value="{{ config.output_size_width }}" 
+                           placeholder="Ancho en píxeles" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="output_size_height" class="form-label">Alto de Imagen</label>
+                    <input type="number" id="output_size_height" name="output_size_height" 
+                           class="form-input" value="{{ config.output_size_height }}" 
+                           placeholder="Alto en píxeles" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Guardar Configuración</button>
+            </form>
         </div>
-        
-        <div class="form-group">
-            <label for="output_size_width">Ancho de la imagen:</label>
-            <input type="number" id="output_size_width" name="output_size_width" 
-                   value="{{ config.output_size_width }}" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="output_size_height">Alto de la imagen:</label>
-            <input type="number" id="output_size_height" name="output_size_height" 
-                   value="{{ config.output_size_height }}" required>
-        </div>
-        
-        <button type="submit">Guardar Configuración</button>
-    </form>
-</body>
-</html>
+    </div>
+
+
+
+{% endblock %}
 

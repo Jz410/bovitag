@@ -2,7 +2,7 @@ import sqlite3
 from functools import wraps
 
 # Ruta de la base de datos
-DATABASE = 'User.db'
+DATABASE = 'db/sqlite-tools-win-x64-3460100/Users'
 
 # Función para obtener la conexión a la base de datos
 def get_db():

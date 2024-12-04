@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session , flash
 from .config import load_config, save_config 
 
 # Definir el blueprint para la administración
@@ -7,6 +7,9 @@ admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 def admin():
+    if 'user_id' not in session:
+        flash("Debes iniciar sesión para ", "warning")
+        return redirect('/login')
     config = load_config()  # Cargar la configuración
     
     if request.method == 'POST':
