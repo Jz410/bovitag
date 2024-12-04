@@ -33,7 +33,7 @@
 </head>
 <body>
     <h1>Configuración de Procesamiento de Imagenes</h1>
-    <form action="{{ url_for('admin') }}" method="post">
+    <form action="{{ url_for('admin.admin') }}" method="post">
         <div class="form-group">
             <label for="output_folder">Ruta de Salida:</label>
             <input type="text" id="output_folder" name="output_folder" 
@@ -56,3 +56,4 @@
     </form>
 </body>
 </html>
+

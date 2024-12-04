@@ -2,11 +2,19 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from key import key
+from routes.admin import admin_bp
+from routes.generator import generator_bp, move_images_bp, files_bp, preview_bp
 
 
 app = Flask(__name__)
 app.secret_key = key
 
+# Registrar los blueprints
+app.register_blueprint(admin_bp)
+app.register_blueprint(generator_bp)
+app.register_blueprint(files_bp)
+app.register_blueprint(move_images_bp)
+app.register_blueprint(preview_bp)
 
 # Funciones para la base de datos
 def get_db_connection():
@@ -39,7 +47,7 @@ def inicio():
             session['user_name'] = usuario["nombre"]
             session['user_rango'] = usuario["rango"]
             flash(f"¡Bienvenido, {usuario['nombre']}!", "success")
-            return redirect('/generador')
+            return redirect('/generator')
         else:
             flash("Usuario o contraseña incorrectos", "danger")
 
@@ -53,14 +61,7 @@ def dashboard():
     
     return f"¡Hola, {session['user_name']}! Eres {session['user_rango']}."
 
-@app.route('/generador')
-def Generador():
-    if 'user_id' not in session:
-        flash("Debes iniciar sesión para acceder al Generador", "warning")
-        return redirect('/login')
-    
-    titulo:str = 'Generador de Img'
-    return render_template('Generador.html',titulo=titulo )
+    return render_template('generator.html',titulo=titulo )
 
 @app.route('/logout')
 def logout():

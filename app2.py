@@ -66,12 +66,14 @@ def get_image_preview(filename):
 def index():
     return redirect(url_for('admin'))
 
+init_db()
+
 @app.route('/admin', methods=['GET', 'POST'])
 def admin():
-    config = load_config()
+    config = load_config()  # Cargar la configuración desde la base de datos
     
     if request.method == 'POST':
-        # Actualizar configuración
+        # Obtener los valores del formulario
         config['output_folder'] = request.form.get('output_folder')
         config['output_size_width'] = int(request.form.get('output_size_width', 497))
         config['output_size_height'] = int(request.form.get('output_size_height', 535))
@@ -80,7 +82,7 @@ def admin():
         output_folder = os.path.abspath(config['output_folder'])  # Asegurar ruta absoluta
         os.makedirs(output_folder, exist_ok=True)
         
-        # Guardar configuración
+        # Guardar la configuración en la base de datos
         save_config(config)
         
         return redirect(url_for('generator'))
@@ -89,7 +91,7 @@ def admin():
 
 @app.route('/generator', methods=['GET', 'POST'])
 def generator():
-    config = load_config()
+    config = load_config()  # Cargar la configuración desde la base de datos
     
     if request.method == 'POST':
         # Validar la carpeta de entrada
@@ -102,10 +104,6 @@ def generator():
         # Asegurarse de que la carpeta de salida existe
         output_folder = os.path.abspath(config['output_folder'])  # Asegurar ruta absoluta
         os.makedirs(output_folder, exist_ok=True)
-        
-        # Ruta del escritorio para imágenes no seleccionadas
-        desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop', 'unselected_images')
-        os.makedirs(desktop_path, exist_ok=True)
         
         # Procesar imágenes
         numero_actual = start_number
@@ -120,7 +118,7 @@ def generator():
             if os.path.isfile(os.path.join(input_folder, f)) 
             and os.path.splitext(f)[1].lower() in image_extensions
         ]
-        
+                
         for filename in image_files:
             try:
                 # Ruta completa de la imagen
@@ -181,7 +179,6 @@ def generator():
                     cv2.imwrite(output_path, symbol_resized)
                     
                     generated_images.append(nuevo_nombre)  # Añadir a la lista de generadas
-                    
                     numero_actual += 1
                     processed_count += 1
                 else:
