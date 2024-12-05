@@ -9,14 +9,14 @@ body {
 }
 
 /* Container for the main form */
-.generator form {
+.generator {
     width: 90%;
     background-color: white;
     height: 400px;
     margin: 0 auto;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Headings */

@@ -50,6 +50,7 @@ def get_image_preview(filename):
 @generator_bp.route('/generator', methods=['GET', 'POST'])
 def generator():
 
+    titulo:str = 'Generador'
     if 'user_id' not in session:
         flash("Debes iniciar sesión para ", "warning")
         return redirect('/login')
@@ -121,7 +122,7 @@ def generator():
         
         return render_template('select_images.html', images=generated_images, output_folder=output_folder)
     
-    return render_template('generator.html', config=config)
+    return render_template('generator.html', config=config, titulo=titulo)
 
 @move_images_bp.route('/move_images', methods=['POST'])
 def move_images():
