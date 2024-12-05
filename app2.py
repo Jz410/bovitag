@@ -3,10 +3,50 @@ import cv2
 import numpy as np
 import base64
 from flask import Flask, render_template, request, redirect, url_for, jsonify, send_from_directory
+import sqlite3
+from flask import Flask, render_template, request, redirect, session, flash
+from werkzeug.security import generate_password_hash, check_password_hash
+from key import key
+
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Cambia esto por una clave secreta aleatoria
+app.secret_key = key
+
+
+# Funciones para la base de datos
+def get_db_connection():
+    conn = sqlite3.connect('db/sqlite-tools-win-x64-3460100/Users')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def get_user_by_name(nombre):
+    conn = get_db_connection()
+    user = conn.execute("SELECT * FROM usuarios WHERE nombre = ?", (nombre,)).fetchone()
+    conn.close()
+    return user
+
+@app.route('/login', methods=["POST", "GET"])
+def inicio():
+    titulo = 'Login'
+
+    if request.method == "POST":
+        user = request.form.get("user", "").strip()
+        password = request.form.get("password", "").strip()
+
+        # Validar usuario y contraseña
+        usuario = get_user_by_name(user)
+        if usuario and check_password_hash(usuario["contraseña"], password):
+            session['user_id'] = usuario["id"]
+            session['user_name'] = usuario["nombre"]
+            session['user_rango'] = usuario["rango"]
+            flash(f"¡Bienvenido, {usuario['nombre']}!", "success")
+            return redirect('/generator')
+        else:
+            flash("Usuario o contraseña incorrectos", "danger")
+
+    return render_template('login.html', titulo=titulo)
+
 
 # Configuración por defecto
 CONFIG_FILE = 'config.json'
@@ -30,6 +70,10 @@ def load_config():
 
 @app.route('/list_files')
 def list_files():
+    if 'user_id' not in session:
+        flash("Debes iniciar sesión para acceder al dashboard", "warning")
+        return redirect('/login')
+    
     folder = request.args.get('folder', '')
     
     # Validar si la carpeta existe
@@ -50,6 +94,10 @@ def list_files():
 
 @app.route('/get_image_preview/<path:filename>')
 def get_image_preview(filename):
+    if 'user_id' not in session:
+        flash("Debes iniciar sesión para acceder al dashboard", "warning")
+        return redirect('/login')
+    
     folder = request.args.get('folder', '')
     
     # Construir la ruta completa
@@ -64,6 +112,9 @@ def get_image_preview(filename):
 
 @app.route('/')
 def index():
+    if 'user_id' not in session:
+        flash("Debes iniciar sesión para acceder al dashboard", "warning")
+        return redirect('/login')
     return redirect(url_for('admin'))
 
 init_db()
