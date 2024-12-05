@@ -9,10 +9,9 @@ body {
 }
 
 /* Container for the main form */
-form {
+.generator form {
     width: 90%;
     background-color: white;
-    max-width: 600px;
     height: 400px;
     margin: 0 auto;
     padding: 30px;

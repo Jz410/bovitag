@@ -1,0 +1,42 @@
+.menu{
+    width: 100%;
+    height: 65%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid;
+}
+
+.menu ul{
+    display: flex;
+    justify-content: end;
+    width: 90%;
+    align-items: center;
+    height: 100%;
+    
+}
+
+.menu li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    margin: 10px;
+}
+
+.menu a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid transparent;
+    transition: 0.5s all;
+    font-size:20px;
+}
+
+.menu li :hover{
+    border-bottom: 1px solid;
+    transition: 0.5s all;
+}

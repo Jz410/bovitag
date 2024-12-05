@@ -13,6 +13,7 @@
     align-items: center;
     min-height: 100vh;
     padding: 20px;
+    margin-top: -120px;
 }
 
 .admin-panel {
@@ -20,7 +21,7 @@
     border-radius: 12px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     width: 100%;
-    max-width: 550px;
+    min-width: 550px;
     padding: 40px;
     transition: all 0.3s ease;
 }

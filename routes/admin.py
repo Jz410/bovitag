@@ -7,6 +7,9 @@ admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 def admin():
+
+    titulo:str = 'Configuración de Imagenes'
+
     if 'user_id' not in session:
         flash("Debes iniciar sesión para ", "warning")
         return redirect('/login')
@@ -27,4 +30,4 @@ def admin():
         
         return redirect(url_for('generator.generator'))  # Redirigir al generador
     
-    return render_template('admin.html', config=config)
+    return render_template('admin.html', config=config,  titulo= titulo)

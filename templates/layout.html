@@ -9,15 +9,40 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Global.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/preview.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css')}}">
+    
+
     <title>{{ titulo }}</title>
 </head>
 
 <body>
+
+    
+    <nav class="menu">
+        <ul>
+            <li><a href="/generator">Procesador de Imágenes</a></li>
+            <li>
+                <a href="/admin">Admin</a>
+            </li>
+            <li><a href="/adduser">Add User</a></li>
+        </ul>
+    </nav>
+    
+
+    <div class="btn_user">
+
+        <span>{{ titulo }}</span>
+    
+    </div>
+
     <main>
         {% block content %}
             <!--Contenido se mostrara aquí-->
         {% endblock%}
     </main>
+
+
 
     <footer class="footer">
         <section class="Informacion">
