@@ -1,7 +1,5 @@
 {% extends 'layout.html'%}
 {% block content %}
-<h1>Procesar Imagenes</h1>
-
 <form class="generator" action="{{ url_for('generator.generator') }}" method="post">
     <div class="form-group">
         <label for="input_folder">Ruta de Entrada:</label>
@@ -10,14 +8,14 @@
 
     <div class="form-group">
         <label for="start_number">Numero de Inicio:</label>
-        <input type="number" id="start_number" name="start_number" value="2701" required placeholder="Ingrese el Numero de Inico del Renombramiento">
+        <input type="number" id="start_number" name="start_number" value="0000" required placeholder="Ingrese el Numero de Inico del Renombramiento">
     </div>
 
     <div id="preview-container" class="preview-container">
         <p>Introduzca una ruta para ver una vista previa de la imagen</p>
     </div>
 
-    <button type="submit">Procesar Imagenes</button>
+    <button type="submit">Procesar Imágenes</button>
 </form>
 
 <div>

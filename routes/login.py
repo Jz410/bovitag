@@ -24,7 +24,6 @@ def index():
 
 @login_bp.route('/login', methods=["POST", "GET"])
 def inicio():
-
     titulo = 'Login'
 
     if request.method == "POST":
@@ -44,15 +43,6 @@ def inicio():
 
     return render_template('login.html', titulo=titulo)
 
-@login_bp.route('/dashboard')
-def dashboard():
-    if 'user_id' not in session:
-        flash("Debes iniciar sesión para acceder al dashboard", "warning")
-        return redirect('/login')
-    
-    return f"¡Hola, {session['user_name']}! Eres {session['user_rango']}."
-
-    return render_template('generator.html',titulo=titulo )
 
 @login_bp.route('/logout')
 def logout():
