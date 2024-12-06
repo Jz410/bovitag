@@ -1,116 +1,154 @@
-/* Reset and base styles */
-body {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    color: #333;
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --text-color: #2c3e50;
+    --background-color: #ecf0f1;
+    --accent-color: #e74c3c;
 }
 
-/* Container for the main form */
+body {
+    font-family: 'Roboto', 'Arial', sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(135deg, var(--background-color), #ffffff);
+    margin: 0;
+    padding: 20px;
+    color: var(--text-color);
+    transition: background 0.5s ease;
+}
+
 .generator form {
     width: 90%;
     background-color: white;
-    height: 400px;
+    max-width: 700px;
     margin: 0 auto;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
 }
 
-/* Headings */
+.generator form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
 h1 {
     text-align: center;
-    color: #2c3e50;
+    color: var(--primary-color);
     margin-bottom: 30px;
-    font-size: 2em;
+    font-size: 2.5em;
+    filter: drop-shadow(0px  0px  4px #ffd000);
 }
 
 h2 {
-    color: #34495e;
-    border-bottom: 2px solid #3498db;
+    color: var(--text-color);
+    border-bottom: 3px solid var(--primary-color);
     padding-bottom: 10px;
     margin-top: 30px;
+    position: relative;
 }
 
-/* Form groups */
 .form-group {
-    margin-bottom: 20px;
+    position: relative;
+    margin-bottom: 25px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    color: #2c3e50;
-    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #bdc3c7;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
+    padding: 12px;
+    border: 2px solid #bdc3c7;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 16px;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
 }
 
-/* Preview container */
 .preview-container {
-    background-color: #ecf0f1;
-    border: 2px dashed #bdc3c7;
-    border-radius: 8px;
-    padding: 20px;
+    background-color: #f9f9f9;
+    border: 2px dashed var(--primary-color);
+    border-radius: 10px;
+    padding: 25px;
     text-align: center;
-    margin-bottom: 20px;
-    min-height: 100px;
+    margin-bottom: 25px;
+    min-height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #7f8c8d;
+    transition: all 0.4s ease;
 }
 
-/* Submit button */
+.preview-container:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+}
+
 button[type="submit"] {
     width: 100%;
-    padding: 12px;
-    background-color: #3498db;
+    padding: 15px;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1em;
+    transition: all 0.3s ease;
+    font-size: 1.1em;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+}
+
+button[type="submit"]:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: all 0.5s ease;
+}
+
+button[type="submit"]:hover:before {
+    left: 100%;
 }
 
 button[type="submit"]:hover {
     background-color: #2980b9;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Configuration details */
 .last-of-type {
     background-color: white;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
 }
 
-.last-of-type p {
-    margin: 10px 0;
-    color: #34495e;
+.last-of-type:hover {
+    transform: scale(1.02);
 }
 
-/* Responsive design */
 @media (max-width: 600px) {
-    form, div:last-of-type {
+    .generator form, .last-of-type {
         width: 95%;
-        padding: 15px;
+        padding: 20px;
     }
 }

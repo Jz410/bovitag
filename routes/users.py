@@ -18,7 +18,7 @@ def usuarios():
 
     if request.method == 'POST':
         usuario = request.form['nombre']
-        password = request.form['contrasseña']
+        password = request.form['contraseña']
         rango = request.form['rango']
 
 
@@ -29,7 +29,7 @@ def usuarios():
             cursor = conn.cursor()
 
             # Insertar los datos del usuario en la base de datos
-            cursor.execute("INSERT INTO Users (user, password, rango) VALUES (?, ?, ?)", 
+            cursor.execute("INSERT INTO usuarios (nombre, contraseña, rango) VALUES (?, ?, ?)", 
                            (usuario, password, rango))
             
             # Guardar cambios

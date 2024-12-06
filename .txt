@@ -1,0 +1,7 @@
+CREATE TABLE image_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,   
+    user_id INTEGER NOT NULL,                
+    image_name TEXT NOT NULL,                
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
