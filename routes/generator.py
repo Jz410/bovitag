@@ -90,60 +90,60 @@ def generator(cursor):
 
         for filename in image_files:
             try:
-                # Your existing image processing code
+                # Leer la imagen
                 img_path = os.path.join(input_folder, filename)
                 img = cv2.imread(img_path)
+
+                # Convertir a escala de grises y suavizar
                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                 blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-                
-                # Perform thresholding
+
+                # Realizar umbralización
                 _, binary = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-                
-                # Morphological operations
+
+                # Operaciones morfológicas
                 kernel = np.ones((3, 3), np.uint8)
                 morph = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel, iterations=2)
-                
-                # Find contours
+
+                # Encontrar contornos
                 contours, _ = cv2.findContours(morph, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                
+
                 if contours:
-                    # Get the largest contour
+                    # Obtener el contorno más grande
                     symbol_contour = max(contours, key=cv2.contourArea)
-                    
-                    # Create a mask
+
+                    # Crear una máscara y extraer el símbolo
                     mask = np.zeros_like(gray)
                     cv2.drawContours(mask, [symbol_contour], -1, 255, thickness=cv2.FILLED)
-                    
-                    # Extract symbol
                     symbol = cv2.bitwise_and(img, img, mask=mask)
                     symbol[np.where(mask == 0)] = [255, 255, 255]
-                    
-                    # Get bounding rectangle
+
+                    # Extraer y limpiar el símbolo
                     x, y, w, h = cv2.boundingRect(symbol_contour)
                     symbol_cropped = symbol[y:y+h, x:x+w]
-                    
-                    # Convert to grayscale and threshold
                     symbol_gray = cv2.cvtColor(symbol_cropped, cv2.COLOR_BGR2GRAY)
                     _, symbol_clean = cv2.threshold(symbol_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-                    
-                    # Prepare final symbol
-                    symbol_final = np.ones_like(symbol_clean) * 255
-                    symbol_final[symbol_clean == 0] = 0
-                    
-                    # Resize
+
+                    # Agregar padding blanco
+                    padded = cv2.copyMakeBorder(symbol_clean, 200, 200, 200, 200, cv2.BORDER_CONSTANT, value=[255])
+
+                    # Suavizar bordes
+                    smoothed_edges = cv2.bilateralFilter(padded, 10, 95, 95)
+
+                    # Redimensionar a las dimensiones configuradas
                     output_size = (config['output_size_width'], config['output_size_height'])
-                    symbol_resized = cv2.resize(symbol_final, output_size, interpolation=cv2.INTER_AREA)
-                    
-                    # Generate output filename
+                    symbol_resized = cv2.resize(smoothed_edges, output_size, interpolation=cv2.INTER_AREA)
+
+                    # Generar el nombre del archivo de salida
                     nuevo_nombre = f"{numero_actual:04d}.jpg"
                     output_path = os.path.join(output_folder, nuevo_nombre)
-                    
-                    # Save the image
+
+                    # Guardar la imagen procesada
                     cv2.imwrite(output_path, symbol_resized)
-                    
-                    # Log the processed image to the database with user's name
+
+                    # Registrar en la base de datos
                     cursor.execute(
-                        "INSERT INTO registros (usuario_id, nombre_imagen, usuario_nombre) VALUES (%s, %s, %s)", 
+                        "INSERT INTO registros (usuario_id, nombre_imagen, usuario_nombre) VALUES (%s, %s, %s)",
                         (session['user_id'], nuevo_nombre, user_name)
                     )
 
@@ -156,6 +156,7 @@ def generator(cursor):
             except Exception as e:
                 print(f"Error procesando {filename}: {e}")
                 skipped_count += 1
+
 
         return render_template('select_images.html', 
                                images=generated_images, 

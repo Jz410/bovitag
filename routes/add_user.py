@@ -5,10 +5,10 @@ def insertar_usuario(nombre, contraseña, rango):
     try:
         # Conexión a la base de datos
         conn = pymysql.connect(
-            host='127.0.0.1',  # Cambia si usas otro host
-            user='root',
-            password='7003',
-            database='bovitag1'
+            host='bbgtlqffrhru20mqjx0c-mysql.services.clever-cloud.com',  # Cambia si usas otro host
+            user='uf7vsfgxsseneyqb',
+            password='t0kvNi2jGemkaULxm5jc',
+            database='bbgtlqffrhru20mqjx0c'
         )
         with conn.cursor() as cursor:
             # Generar hash de la contraseña
