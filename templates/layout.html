@@ -21,14 +21,19 @@
     <nav class="menu">
         <ul>
             <!-- Este enlace está disponible para todos -->
+            
             <li><a href="/generator">Procesador de Imágenes</a></li>
+
 
             <!-- Estos enlaces solo estarán disponibles si el rango es 'admin' -->
             {% if session.get('user_rango') == 'admin' %}
+            
                 <li><a href="/admin">Admin</a></li>
                 <li><a href="/addusers">Agregar Usuarios</a></li>
                 <li><a href="image_processing_logs">Registro de Images</a></li>
+
             {% endif %}
+            <li><a href="/logout" style="background-color: red; color: white; padding: 5px; border-radius: 10px;">Cerrar seccion</a></li>
         </ul>
     </nav>
 
