@@ -1,11 +1,14 @@
 import os
 from flask import Blueprint, render_template, request, redirect, url_for, session , flash
 from .config import load_config, save_config 
+from routes.restriccion_de_rutas import admin_required
 
-# Definir el blueprint para la administración
+
+
 admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
+@admin_required
 def admin():
 
     titulo:str = 'Configuración de Imagenes'

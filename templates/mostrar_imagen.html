@@ -1,0 +1,12 @@
+{% extends "layouthtml" %}
+
+{% block content %}
+<div class="container">
+    <h1>Imagen: {{ nombre_imagen }}</h1>
+    <div class="text-center">
+        <img src="data:image/jpeg;base64,{{ imagen_base64 }}" 
+             alt="{{ nombre_imagen }}" 
+             class="img-fluid">
+    </div>
+</div>
+{% endblock %}

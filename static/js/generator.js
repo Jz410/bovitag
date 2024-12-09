@@ -35,3 +35,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const folderInput = document.getElementById('input_folder');
     folderInput.addEventListenaer('change', listFiles);
 });
+
+document.getElementById('input_folder').addEventListener('change', function(event) {
+    const previewContainer = document.getElementById('preview-container');
+    previewContainer.innerHTML = ''; // Limpiar contenido anterior
+
+    const file = event.target.files[0]; // Obtener el primer archivo seleccionado
+
+    if (file) {
+        const reader = new FileReader();
+
+        // Cuando la imagen esté lista, agregarla al contenedor
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = file.name;
+            img.style.maxWidth = '200px'; // Ajustar tamaño de la imagen
+            img.style.margin = '10px';
+            previewContainer.appendChild(img);
+        }
+
+        reader.readAsDataURL(file); // Leer la imagen como URL
+    } else {
+        previewContainer.innerHTML = '<p>No se seleccionó ninguna imagen.</p>';
+    }
+});
+

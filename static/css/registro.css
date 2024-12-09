@@ -1,0 +1,138 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+/* Page Wrapper */
+.page-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    overflow: hidden;
+}
+
+/* Page Header */
+.page-header {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.page-title {
+    color: #2c3e50;
+    font-weight: 300;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.page-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #cc2e2e);
+}
+
+/* Table Styles */
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-header {
+    background: linear-gradient(to right, #3498db, #6b2ecc);
+    color: white;
+}
+
+.table-header th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.table-body tr {
+    transition: background-color 0.3s ease;
+}
+
+.table-body .row-even {
+    background-color: #f8f9fa;
+}
+
+.table-body .row-odd {
+    background-color: white;
+}
+
+.table-body tr:hover {
+    background-color: #e9ecef;
+}
+
+.table-body td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e4e8;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-view {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.empty-message {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .page-wrapper {
+        padding: 15px;
+        margin: 0 10px;
+    }
+
+    .table-header th,
+    .table-body td {
+        padding: 10px;
+    }
+}

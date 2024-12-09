@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css')}}">
     
 
     <title>{{ titulo }}</title>
@@ -19,20 +20,18 @@
 <body>
     <nav class="menu">
         <ul>
+            <!-- Este enlace está disponible para todos -->
             <li><a href="/generator">Procesador de Imágenes</a></li>
-            <li>
-                <a href="/admin">Admin</a>
-            </li>
-            <li><a href="/addusers">Add User</a></li>
+
+            <!-- Estos enlaces solo estarán disponibles si el rango es 'admin' -->
+            {% if session.get('user_rango') == 'admin' %}
+                <li><a href="/admin">Admin</a></li>
+                <li><a href="/addusers">Agregar Usuarios</a></li>
+                <li><a href="image_processing_logs">Registro de Images</a></li>
+            {% endif %}
         </ul>
     </nav>
 
-
-    <div class="btn_user">
-
-        <span>{{ titulo }}</span>
-    
-    </div>
 
     <main>
         {% block content %}

@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <title>Login DE Ministerio De Agricultura y Ganadería - Mag</title>
+    
 </head>
 
 <body style="overflow: hidden;">
     <div class="Login-all">
         <div class="ImgContainer">
-            <img src="{{ url_for('static', filename='img/MAG.png') }}" alt="logo">
+            <img src="{{ url_for('static', filename='img/Logo-MAG.png') }}" alt="logo">
             <p class="parrafo">Dirección General De Ganadería</p>
         </div>
         <form action="/login" method="POST" class="login">
@@ -22,7 +23,10 @@
             <button type="submit">Login</button>
         </form>
 
+        
+
     </div>
+
     <!-- Mensajes flash como ventana flotante -->
 <div id="flash-messages" class="flash-container">
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -36,6 +40,7 @@
     {% endwith %}
 </div>
 
+
 <script>
     // Espera a que la página cargue
     document.addEventListener('DOMContentLoaded', () => {
@@ -48,6 +53,9 @@
         });
     });
 </script>
+
+
+   
 
 
 </body>

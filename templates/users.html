@@ -1,12 +1,12 @@
 {% extends 'layout.html'%}
 {% block content %}
 
-<form class="User" action="{{ url_for('users.usuarios') }}" method="POST">
+<form class="User" action="/addusers" method="POST">
     <label class="labeluser" for="nombre">Ingrese el nombre de usuario</label>
     <input class="inputuser" type="text" id="nombre" name="nombre" placeholder="Ingrese un nombre" required autofocus>
 
     <label class="labeluser" for="contraseña">Ingrese una contraseña para el usuario</label>
-    <input class="inputuser" type="password" id="contraseña" name="contrasseña" placeholder="Ingrese una contraseña" required>
+    <input class="inputuser" type="password" id="contraseña" name="contraseña" placeholder="Ingrese una contraseña" required>
 
     <label class="labeluser" for="rango">Ingrese un rango para el usuario:</label>
     <select class="inputuser" name="rango" id="rango" required>
