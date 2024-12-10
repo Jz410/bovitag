@@ -1,7 +1,7 @@
 import pymysql
 from flask import Flask, render_template, request, redirect, session, flash, Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
-from models.bdd import get_db_connection  # Importar conexión desde el módulo correspondiente que es models > bdd >get_db_connection
+from models.bdd import get_db_connection  
 
 # Blueprints
 login_bp = Blueprint('login', __name__)
@@ -38,6 +38,7 @@ def index():
     return redirect('/login')
 
 @login_bp.route('/login', methods=["POST", "GET"])
+
 def inicio():
     """
     Maneja la lógica de inicio de sesión.
