@@ -6,22 +6,11 @@
     --accent-color: #e74c3c;
 }
 
-body {
-    font-family: 'Roboto', 'Arial', sans-serif;
-    line-height: 1.6;
-    background: linear-gradient(135deg, var(--background-color), #ffffff);
-    margin: 0;
-    padding: 20px;
-    color: var(--text-color);
-    transition: background 0.5s ease;
-}
-
 /* Container for the main form */
 .generator {
     width: 90%;
     background-color: white;
-    max-width: 700px;
-    margin: 0 auto;
+    margin: 10px auto;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.1);
@@ -46,6 +35,8 @@ h2 {
 .form-group {
     position: relative;
     margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
 }
 
 .form-group label {
@@ -57,7 +48,7 @@ h2 {
 }
 
 .form-group input {
-    width: 100%;
+    width: 90%;
     padding: 12px;
     border: 2px solid #bdc3c7;
     border-radius: 6px;

@@ -1,20 +1,24 @@
 *{
-    margin: 0;
-    padding: 0;
+    margin: 0px;
+    padding: 0px;
 }
 
 main{
-    width: 100%;
+    width: 90%;
+    max-width: 80%;
     height: 100vh;
-}
-
-body{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 90%;
-    margin: 0 auto;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 

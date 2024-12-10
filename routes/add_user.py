@@ -1,7 +1,7 @@
 import pymysql
 from werkzeug.security import generate_password_hash
 
-def insertar_usuario(nombre, contraseña, rango):
+def insertar_usuario(nombre:str, contraseña:str, rango:str):
     try:
         # Conexión a la base de datos
         conn = pymysql.connect(
@@ -26,4 +26,4 @@ def insertar_usuario(nombre, contraseña, rango):
         conn.close()
 
 # Crear usuario inicial
-insertar_usuario('admin', 'admin123', 'admin')  # Cambia los valores según necesites
+insertar_usuario('juan', '9876543', 'admin')  # Cambia los valores según necesites

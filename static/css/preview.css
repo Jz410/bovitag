@@ -1,36 +1,44 @@
 .preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     color: #2c3e50;
     margin-bottom: 30px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    width: 100%;
+    width: 90%;
     font-size: 1.2rem; /* Tamaño de fuente más grande */
 }
+
+
 
 .preview-imgs {
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    padding: 30px;
-    width: 90%; /* Ajuste de ancho para pantallas grandes */
-    max-width: 900px;
+    width: 100%; /* Ajuste de ancho para pantallas grandes */
     margin: 0 auto;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     max-height: 600px;
     overflow-y: auto;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    scrollbar-width: 0px;
 }
 
 .preview-imgs:hover {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
     transform: translateY(-5px); /* Agregar un ligero movimiento */
 }
 
 .preview-imgs-e {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Mejor para pantallas pequeñas */
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Mejor para pantallas pequeñas */
+    gap: 10px;
     margin-bottom: 30px;
     justify-content: center;
     width: 100%;
@@ -42,17 +50,14 @@
     padding: 15px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    border: 2px solid transparent;
     position: relative;
-    overflow: hidden;
     width: 100%;
-    max-width: 250px;
     margin: 0 auto;
 }
 
 .preview-imgs-a:hover {
     transform: scale(1.05); /* Mayor escala */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
     background-color: #ecf0f1; /* Cambiar color de fondo al pasar sobre */
     border-color: #2980b9; /* Mejora de color al hacer hover */
 }
@@ -124,6 +129,7 @@
     margin-bottom: 10px;
     font-weight: 600;
     color: #2c3e50;
+    
 }
 
 #custom_folder {
@@ -170,7 +176,7 @@
 
 @media screen and (max-width: 1024px) {
     .preview-imgs {
-        width: 85%;
+        width: 90%;
     }
 
     .preview-imgs-e {
