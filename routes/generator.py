@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models.bdd import get_db_connection, db_operation
 import time
 from routes.restriccion_de_rutas import admin_required
+import shutil
 generator_bp = Blueprint('generator', __name__)
 files_bp = Blueprint('files', __name__)
 preview_bp = Blueprint('preview', __name__)
@@ -67,96 +68,96 @@ def generator(cursor):
     config = load_config()
     
     if request.method == 'POST':
-        input_folder = request.form.get('input_folder')
-        if not os.path.isdir(input_folder):
-            return f"Error: {input_folder} no es un directorio válido"
-
-        start_number = int(request.form.get('start_number', 2701))
         output_folder = os.path.abspath(config['output_folder'])
         os.makedirs(output_folder, exist_ok=True)
 
-        numero_actual = start_number
+        numero_actual = int(request.form.get('start_number', 2701))
         processed_count = 0
         skipped_count = 0
         generated_images = []
-        image_extensions = ['.jpg', '.jpeg', '.png', '.bmp', '.tiff']
         
-        # Image processing logic
-        image_files = [
-            f for f in os.listdir(input_folder) 
-            if os.path.isfile(os.path.join(input_folder, f)) 
-            and os.path.splitext(f)[1].lower() in image_extensions
-        ]
+        # Get uploaded files directly from the request
+        uploaded_files = request.files.getlist('input_files')
+        
+        # Debug: Log total number of uploaded files
+        print(f"Total uploaded files: {len(uploaded_files)}")
+        
+        for uploaded_file in uploaded_files:
+            if uploaded_file and uploaded_file.filename:
+                try:
+                    # Debug: Print filename being processed
+                    print(f"Processing file: {uploaded_file.filename}")
+                    
+                    # Read the file directly from the uploaded file
+                    img_array = np.frombuffer(uploaded_file.read(), np.uint8)
+                    img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
+                    
+                    # Debug: Check if image was successfully read
+                    if img is None:
+                        print(f"Failed to decode image: {uploaded_file.filename}")
+                        skipped_count += 1
+                        continue
 
-        for filename in image_files:
-            try:
-                # Leer la imagen
-                img_path = os.path.join(input_folder, filename)
-                img = cv2.imread(img_path)
+                    # Rest of the image processing
+                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 
-                # Convertir a escala de grises y suavizar
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+                    _, binary = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
-                # Realizar umbralización
-                _, binary = cv2.threshold(blurred, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+                    kernel = np.ones((3, 3), np.uint8)
+                    morph = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel, iterations=2)
 
-                # Operaciones morfológicas
-                kernel = np.ones((3, 3), np.uint8)
-                morph = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel, iterations=2)
+                    contours, _ = cv2.findContours(morph, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-                # Encontrar contornos
-                contours, _ = cv2.findContours(morph, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    if contours:
+                        # Debug: Log number of contours found
+                        print(f"Contours found in {uploaded_file.filename}: {len(contours)}")
+                        
+                        symbol_contour = max(contours, key=cv2.contourArea)
 
-                if contours:
-                    # Obtener el contorno más grande
-                    symbol_contour = max(contours, key=cv2.contourArea)
+                        mask = np.zeros_like(gray)
+                        cv2.drawContours(mask, [symbol_contour], -1, 255, thickness=cv2.FILLED)
+                        symbol = cv2.bitwise_and(img, img, mask=mask)
+                        symbol[np.where(mask == 0)] = [255, 255, 255]
 
-                    # Crear una máscara y extraer el símbolo
-                    mask = np.zeros_like(gray)
-                    cv2.drawContours(mask, [symbol_contour], -1, 255, thickness=cv2.FILLED)
-                    symbol = cv2.bitwise_and(img, img, mask=mask)
-                    symbol[np.where(mask == 0)] = [255, 255, 255]
+                        x, y, w, h = cv2.boundingRect(symbol_contour)
+                        symbol_cropped = symbol[y:y+h, x:x+w]
+                        symbol_gray = cv2.cvtColor(symbol_cropped, cv2.COLOR_BGR2GRAY)
+                        _, symbol_clean = cv2.threshold(symbol_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-                    # Extraer y limpiar el símbolo
-                    x, y, w, h = cv2.boundingRect(symbol_contour)
-                    symbol_cropped = symbol[y:y+h, x:x+w]
-                    symbol_gray = cv2.cvtColor(symbol_cropped, cv2.COLOR_BGR2GRAY)
-                    _, symbol_clean = cv2.threshold(symbol_gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                        padded = cv2.copyMakeBorder(symbol_clean, 200, 200, 200, 200, cv2.BORDER_CONSTANT, value=[255])
+                        smoothed_edges = cv2.bilateralFilter(padded, 10, 95, 95)
 
-                    # Agregar padding blanco
-                    padded = cv2.copyMakeBorder(symbol_clean, 200, 200, 200, 200, cv2.BORDER_CONSTANT, value=[255])
+                        output_size = (config['output_size_width'], config['output_size_height'])
+                        symbol_resized = cv2.resize(smoothed_edges, output_size, interpolation=cv2.INTER_AREA)
 
-                    # Suavizar bordes
-                    smoothed_edges = cv2.bilateralFilter(padded, 10, 95, 95)
+                        nuevo_nombre = f"{numero_actual:04d}.jpg"
+                        output_path = os.path.join(output_folder, nuevo_nombre)
 
-                    # Redimensionar a las dimensiones configuradas
-                    output_size = (config['output_size_width'], config['output_size_height'])
-                    symbol_resized = cv2.resize(smoothed_edges, output_size, interpolation=cv2.INTER_AREA)
+                        # Debug: Print output path
+                        print(f"Saving image to: {output_path}")
+                        
+                        cv2.imwrite(output_path, symbol_resized)
 
-                    # Generar el nombre del archivo de salida
-                    nuevo_nombre = f"{numero_actual:04d}.jpg"
-                    output_path = os.path.join(output_folder, nuevo_nombre)
+                        # Registrar en la base de datos
+                        cursor.execute(
+                            "INSERT INTO registros (usuario_id, nombre_imagen, usuario_nombre) VALUES (%s, %s, %s)",
+                            (session['user_id'], nuevo_nombre, user_name)
+                        )
 
-                    # Guardar la imagen procesada
-                    cv2.imwrite(output_path, symbol_resized)
+                        generated_images.append(nuevo_nombre)
+                        numero_actual += 1
+                        processed_count += 1
+                    else:
+                        print(f"No contours found in {uploaded_file.filename}")
+                        skipped_count += 1
 
-                    # Registrar en la base de datos
-                    cursor.execute(
-                        "INSERT INTO registros (usuario_id, nombre_imagen, usuario_nombre) VALUES (%s, %s, %s)",
-                        (session['user_id'], nuevo_nombre, user_name)
-                    )
-
-                    generated_images.append(nuevo_nombre)
-                    numero_actual += 1
-                    processed_count += 1
-                else:
+                except Exception as e:
+                    print(f"Error procesando {uploaded_file.filename}: {e}")
                     skipped_count += 1
 
-            except Exception as e:
-                print(f"Error procesando {filename}: {e}")
-                skipped_count += 1
-
+        # Debug: Print processing summary
+        print(f"Processing complete. Processed: {processed_count}, Skipped: {skipped_count}")
 
         return render_template('select_images.html', 
                                images=generated_images, 
@@ -164,7 +165,6 @@ def generator(cursor):
                                user_name=user_name)
 
     return render_template('generator.html', config=config, titulo=titulo, user_name=user_name)
-
 
 
 @generator_bp.route('/image_processing_logs')
@@ -186,21 +186,44 @@ def image_processing_logs(cursor):
     return render_template('image_processing_logs.html', logs=logs)
 
 
+import os
+import shutil
+import zipfile
+from flask import request, render_template, flash, send_file
+from werkzeug.utils import secure_filename
+
 @move_images_bp.route('/move_images', methods=['POST'])
 def move_images():
+    # Extract form data
     selected_images = request.form.getlist('selected_images')
-    custom_folder = request.form.get('custom_folder')
     output_folder = request.form.get('output_folder')
-    
-    # Usar la carpeta personalizada si se especifica, si no, usar la carpeta de salida
-    destination_folder = custom_folder if custom_folder else output_folder
-    
-    os.makedirs(destination_folder, exist_ok=True)  # Crear carpeta si no existe
-    
-    # Mover imágenes seleccionadas
-    for image_name in selected_images:
-        src_path = os.path.join(output_folder, image_name)
-        dest_path = os.path.join(destination_folder, image_name)
-        os.rename(src_path, dest_path)
-    
-    return render_template('generator.html')
+   
+    # Debug: Print out received paths
+    print(f"Output Folder Path: {output_folder}")
+    print(f"Selected Images: {selected_images}")
+   
+    # Validate folder selection
+    if not selected_images:
+        flash("Por favor, seleccione imágenes para mover.", "warning")
+        return render_template('generator.html')
+   
+    # Prepare ZIP file path
+    zip_filename = "imagenes_seleccionadas.zip"
+    zip_filepath = os.path.join(output_folder, zip_filename)
+   
+    try:
+        # Create ZIP file with selected images
+        with zipfile.ZipFile(zip_filepath, 'w') as zipf:
+            for image_name in selected_images:
+                src_path = os.path.join(output_folder, image_name)
+                if os.path.exists(src_path):
+                    zipf.write(src_path, arcname=secure_filename(image_name))
+                else:
+                    flash(f"Archivo no encontrado: {image_name}", "warning")
+       
+        # Send the ZIP file to the client
+        return send_file(zip_filepath, as_attachment=True)
+   
+    except Exception as e:
+        flash(f"Error al generar el archivo ZIP: {str(e)}", "error")
+        return render_template('generator.html')

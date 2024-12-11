@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Function to list files in a directory
     function listFiles() {
-        const folderInput = document.getElementById('input_folder');
+        const folderInput = document.getElementById('input_files');
         const previewContainer = document.getElementById('preview-container');
         
         // Clear previous previews
@@ -32,11 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add event listener to trigger file listing
-    const folderInput = document.getElementById('input_folder');
+    const folderInput = document.getElementById('input_files');
     folderInput.addEventListenaer('change', listFiles);
 });
 
-document.getElementById('input_folder').addEventListener('change', function(event) {
+document.getElementById('input_files').addEventListener('change', function(event) {
     const previewContainer = document.getElementById('preview-container');
     previewContainer.innerHTML = ''; // Limpiar contenido anterior
 
