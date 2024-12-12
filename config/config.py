@@ -1,5 +1,7 @@
 import os
 
+"""
+
 class Config:
     SECRET_KEY = os.urandom(24)
     DB_CONFIG = {
@@ -20,7 +22,7 @@ class Config:
         'database': "bovitag1",
         'cursorclass': 'DictCursor'
     }
-"""
+
 
 """
 import os

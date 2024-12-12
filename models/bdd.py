@@ -24,7 +24,7 @@ def db_operation(func):
         conn = get_db_connection()
         if not conn:
             flash("No se pudo conectar a la base de datos.", "danger")
-            return redirect(url_for('home'))
+            return redirect(url_for('generator.generator'))
         try:
             with conn.cursor() as cursor:
                 result = func(cursor, *args, **kwargs)

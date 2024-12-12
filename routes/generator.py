@@ -17,8 +17,6 @@ from config.config import Config
 
 generator_bp = Blueprint('generator', __name__)
 files_bp = Blueprint('files', __name__)
-preview_bp = Blueprint('preview', __name__)
-move_images_bp = Blueprint('move_images', __name__)
 
 
 @files_bp.route('/list_files')
@@ -41,19 +39,6 @@ def list_files():
     
     return jsonify(image_files)
 
-@preview_bp.route('/get_image_preview/<path:filename>')
-def get_image_preview(filename):
-    folder = request.args.get('folder', '')
-    
-    # Construir la ruta completa
-    full_path = os.path.join(folder, filename)
-    
-    # Validar si el archivo existe
-    if not os.path.isfile(full_path):
-        return '', 404
-
-    # Devolver la imagen directamente desde el directorio
-    return send_from_directory(folder, filename)
 
 @generator_bp.route('/generator', methods=['GET', 'POST'])
 @db_operation
@@ -167,58 +152,5 @@ def generator(cursor):
     return render_template('generator.html', config=config, titulo=titulo, user_name=user_name)
 
 
-@generator_bp.route('/image_processing_logs')
-@admin_required
-@db_operation
-def image_processing_logs(cursor):
-    titulo: str = 'Registro de procesamientos'
-    if 'user_id' not in session:
-        flash("Debes iniciar sesión para acceder", "warning")
-        return redirect('/login')
-
-    # Fetch all logs, not filtered by user_id
-    cursor.execute("""
-        SELECT r.id, r.nombre_imagen, r.fecha, r.usuario_nombre as usuario 
-        FROM registros r
-        ORDER BY r.fecha DESC
-    """)
-    logs = cursor.fetchall()
-
-    return render_template('image_processing_logs.html', logs=logs, titulo=titulo)
 
 
-@move_images_bp.route('/move_images', methods=['POST'])
-def move_images():
-    # Extract form data
-    selected_images = request.form.getlist('selected_images')
-    output_folder = request.form.get('output_folder')
-   
-    # Debug: Print out received paths
-    print(f"Output Folder Path: {output_folder}")
-    print(f"Selected Images: {selected_images}")
-   
-    # Validate folder selection
-    if not selected_images:
-        flash("Por favor, seleccione imágenes para mover.", "warning")
-        return render_template('generator.html')
-   
-    # Prepare ZIP file path
-    zip_filename = "imagenes_seleccionadas.zip"
-    zip_filepath = os.path.join(output_folder, zip_filename)
-   
-    try:
-        # Create ZIP file with selected images
-        with zipfile.ZipFile(zip_filepath, 'w') as zipf:
-            for image_name in selected_images:
-                src_path = os.path.join(output_folder, image_name)
-                if os.path.exists(src_path):
-                    zipf.write(src_path, arcname=secure_filename(image_name))
-                else:
-                    flash(f"Archivo no encontrado: {image_name}", "warning")
-       
-        # Send the ZIP file to the client
-        return send_file(zip_filepath, as_attachment=True)
-   
-    except Exception as e:
-        flash(f"Error al generar el archivo ZIP: {str(e)}", "error")
-        return render_template('generator.html')
