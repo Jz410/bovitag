@@ -3,8 +3,6 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from .config import load_config, save_config 
 from routes.restriccion_de_rutas import admin_required
 
-
-
 admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
