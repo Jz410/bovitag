@@ -63,11 +63,18 @@
     background-color: red;
     border-radius: 10px;
     padding: 10px;
+    transition: 0.5s all;
 }
 
 #close a{
     color: white;
 }
+
+#close:hover{
+    scale: 1.05;
+    transition: 0.5s all;
+}
+
 
 .barrita{
     width: 80%;
