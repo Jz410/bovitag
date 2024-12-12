@@ -9,9 +9,7 @@ body {
 .page-wrapper {
     max-width: 800px;
     margin: 0 auto;
-    background-color: white;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     padding: 30px;
     overflow: hidden;
 }
@@ -20,10 +18,11 @@ body {
 .page-header {
     margin-bottom: 25px;
     text-align: center;
+    color: black;
 }
 
 .page-title {
-    color: #2c3e50;
+    color: #000000;
     font-weight: 300;
     position: relative;
     padding-bottom: 15px;
@@ -35,9 +34,9 @@ body {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 80px;
+    width: 70%;
     height: 3px;
-    background: linear-gradient(to right, #3498db, #cc2e2e);
+    background-color: #000000;
 }
 
 /* Table Styles */
@@ -47,10 +46,17 @@ body {
     border-spacing: 0;
     border-radius: 10px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-title image-history-title{
+    color: #000000;
 }
 
 .table-header {
-    background: linear-gradient(to right, #3498db, #6b2ecc);
+    background: blue;
     color: white;
 }
 
@@ -102,10 +108,7 @@ body {
     color: white;
 }
 
-.btn-delete {
-    background-color: #e74c3c;
-    color: white;
-}
+
 
 .btn:hover {
     opacity: 0.9;

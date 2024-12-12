@@ -11,11 +11,12 @@
        
             <div class="preview-imgs-a">
                 <input type="checkbox" 
+                        class="selecionador"
                        name="selected_images" 
                        value="{{ image }}" 
                        id="{{ image }}">
                 <label for="{{ image }}">{{ image }}</label><br>
-                <img src="{{ url_for('preview.get_image_preview', filename=image, folder=output_folder) }}" alt="{{ image }}">
+                <img class="imagenes_preview" src="{{ url_for('preview.get_image_preview', filename=image, folder=output_folder) }}" alt="{{ image }}">
             </div>
 
         {% endfor %}
