@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-Mag.jfif')}}" type="image/x-icon">
     
 
-    <title>{{ titulo }}</title>
+    <title>Mag - {{ titulo }}</title>
 </head>
 
 <body>
@@ -29,14 +29,16 @@
             <!-- Estos enlaces solo estarán disponibles si el rango es 'admin' -->
             {% if session.get('user_rango') == 'admin' %}
             
-                <li><a href="/admin">Admin</a></li>
+                <li><a href="/admin">administración</a></li>
                 <li><a href="/addusers">Agregar Usuarios</a></li>
-                <li><a href="image_processing_logs">Registro de Images</a></li>
+                <li><a href="image_processing_logs">Registro de Imágenes</a></li>
 
             {% endif %}
-            <li><a href="/logout" style="background-color: red; color: white; padding: 5px; border-radius: 10px;">Cerrar sesión</a></li>
+            <div id="close"><a href="/logout">Cerrar sesión</a></div>
         </ul>
     </nav>
+
+    <div class="barrita"></div>
 
 
     <main>

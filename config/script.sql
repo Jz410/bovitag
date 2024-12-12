@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL UNIQUE,
     contraseña VARCHAR(255) NOT NULL,
-    rango VARCHAR(50) NOT NULL
+    rango VARCHAR(50) NOT NULL,
+    activo TiNYINT (1)
 );
 
 -- Crear la tabla registros

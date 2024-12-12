@@ -1,10 +1,12 @@
 from werkzeug.security import generate_password_hash
-from flask import flash
+from flask import flash, redirect, url_for
 
-from models.bdd import db_operation
+from models.bdd import  get_db_connection , db_operation
+
 
 @db_operation
 def create_user(cursor, username, password, rango):
+
     """
     Crea un usuario en la base de datos.
 
@@ -33,9 +35,9 @@ def create_user(cursor, username, password, rango):
 # Ejemplo de uso en un controlador Flask
 def registrar_usuario():
     # Datos del usuario (pueden venir de un formulario, por ejemplo)
-    username = 'mario'
-    password = 'mario'
-    rango = 'user'
+    username = 'jairo'
+    password = '1234'
+    rango = 'admin'
 
     # Crear usuario
     if create_user(username=username, password=password, rango=rango):

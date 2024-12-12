@@ -7,7 +7,7 @@ def insertar_usuario(nombre:str, contraseña:str, rango:str):
         conn = pymysql.connect(
             host='localhost',  # Cambia si usas otro host
             user='root',
-            password='7003',
+            password='',
             database='bovitag1'
         )
         with conn.cursor() as cursor:
@@ -26,4 +26,4 @@ def insertar_usuario(nombre:str, contraseña:str, rango:str):
         conn.close()
 
 # Crear usuario inicial
-insertar_usuario('juan', '9876543', 'admin')  # Cambia los valores según necesites
+insertar_usuario('jairos', '1234', 'admin')  # Cambia los valores según necesites

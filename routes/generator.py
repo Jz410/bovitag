@@ -9,6 +9,12 @@ from models.bdd import get_db_connection, db_operation
 import time
 from routes.restriccion_de_rutas import admin_required
 import shutil
+import zipfile
+from flask import request, render_template, flash, send_file
+from werkzeug.utils import secure_filename
+from config.config import Config
+
+
 generator_bp = Blueprint('generator', __name__)
 files_bp = Blueprint('files', __name__)
 preview_bp = Blueprint('preview', __name__)
@@ -49,16 +55,10 @@ def get_image_preview(filename):
     # Devolver la imagen directamente desde el directorio
     return send_from_directory(folder, filename)
 
-import os
-import cv2
-import numpy as np
-from flask import session, flash, redirect, url_for, render_template, request
-from config.config import Config
-
 @generator_bp.route('/generator', methods=['GET', 'POST'])
 @db_operation
 def generator(cursor):
-    titulo: str = 'Añadir usuarios'
+    titulo: str = 'Generador de imágenes'
     if 'user_id' not in session:
         flash("Debes iniciar sesión para ", "warning")
         return redirect('/login')
@@ -171,6 +171,7 @@ def generator(cursor):
 @admin_required
 @db_operation
 def image_processing_logs(cursor):
+    titulo: str = 'Registro de procesamientos'
     if 'user_id' not in session:
         flash("Debes iniciar sesión para acceder", "warning")
         return redirect('/login')
@@ -183,14 +184,8 @@ def image_processing_logs(cursor):
     """)
     logs = cursor.fetchall()
 
-    return render_template('image_processing_logs.html', logs=logs)
+    return render_template('image_processing_logs.html', logs=logs, titulo=titulo)
 
-
-import os
-import shutil
-import zipfile
-from flask import request, render_template, flash, send_file
-from werkzeug.utils import secure_filename
 
 @move_images_bp.route('/move_images', methods=['POST'])
 def move_images():

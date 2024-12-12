@@ -12,20 +12,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, var(--background-color), #ffffff);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-bottom: 2px solid var(--primary-color);
     transition: all 0.4s ease;
-}
-
-.menu:hover {
-    box-shadow: 0 6px 8px rgba(0,0,0,0.15);
 }
 
 .menu ul {
     display: flex;
     justify-content: flex-end;
-    width: 90%;
+    width: 95%;
     align-items: center;
     height: 100%;
     gap: 25px;
@@ -47,9 +40,10 @@
     font-weight: 500;
     position: relative;
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    text-align: center;
 }
 
-.menu li a::before {
+.menu li a :hover {
     content: '';
     position: absolute;
     width: 100%;
@@ -62,24 +56,22 @@
 
 .menu li a:hover {
     color: var(--primary-color);
-    transform: scale(1.05);
+    transform: translateY(-3px);
 }
 
-.menu li a:hover::before {
-    left: 0;
+#close{
+    background-color: red;
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.menu li a:active {
-    transform: scale(0.95);
-    color: var(--accent-color);
+#close a{
+    color: white;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-.menu li:nth-child(odd) a:hover {
-    animation: pulse 0.8s infinite;
+.barrita{
+    width: 80%;
+    height: 1px;
+    background-color: black;
+    border-radius: 50%;
 }
