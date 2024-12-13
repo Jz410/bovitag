@@ -9,14 +9,16 @@ from werkzeug.utils import secure_filename
 from key import key
 from routes.admin import admin_bp
 from routes.generator import generator_bp,files_bp
-from routes.login import login_bp, inicio_bp, auditoria_bp
+from routes.login import login_bp, inicio_bp
 from routes.users import users_bp
 from routes.preview import preview_bp , move_images_bp
 from routes.registro import registro_bp
-
+from routes.autorizacion import autorizacion_bp
+from routes.administracion import administracion_bp
 
 app = Flask(__name__)
 app.secret_key = key
+
 
 #
 app.register_blueprint(admin_bp)
@@ -27,9 +29,9 @@ app.register_blueprint(preview_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(inicio_bp)
 app.register_blueprint(users_bp)
-app.register_blueprint(auditoria_bp)
+app.register_blueprint(autorizacion_bp)
 app.register_blueprint(registro_bp)
-
+app.register_blueprint(administracion_bp)
 
 
 
