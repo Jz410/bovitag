@@ -1,5 +1,11 @@
-{% extends 'layout.html'%}
+
 {% block content %}
+<style>
+    .User{
+        width: 90%;
+        margin: 0 auto;
+    }
+</style>
 
 <form class="User" action="/addusers" method="POST">
     <label class="labeluser" for="nombre">Ingrese el nombre de usuario</label>

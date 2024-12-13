@@ -72,6 +72,7 @@ def generator(cursor):
                 try:
                     # Debug: Print filename being processed
                     print(f"Processing file: {uploaded_file.filename}")
+                    flash("procesando imagenes.....")
                     
                     # Read the file directly from the uploaded file
                     img_array = np.frombuffer(uploaded_file.read(), np.uint8)

@@ -3,6 +3,8 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from .config import load_config, save_config 
 from routes.restriccion_de_rutas import admin_required
 
+
+
 admin_bp = Blueprint('admin', __name__)
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
@@ -31,4 +33,4 @@ def admin():
         
         return redirect(url_for('generator.generator'))  # Redirigir al generador
     
-    return render_template('admin.html', config=config,  titulo= titulo)
+    return render_template('administracion.html', config=config,  titulo= titulo)

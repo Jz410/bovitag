@@ -1,0 +1,160 @@
+{% extends 'layout.html' %}
+{% block content %}
+<style>
+    main {
+        display: flex;
+        
+        flex-direction: row;    
+
+    }
+    .sidebar {
+        width: 200px;
+        background: #2c3e50;
+        color: white;
+        padding: 20px;
+    }
+    .sidebar-logo {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+    }
+    .sidebar-menu li {
+        margin: 10px 0;
+    }
+    .sidebar-menu a {
+        color: white;
+        text-decoration: none;
+        font-size: 14px;
+        display: block;
+        padding: 10px;
+        background: #34495e;
+        border-radius: 4px;
+    }
+    .sidebar-menu a:hover {
+        background: #1abc9c;
+    }
+    .content {
+        flex-grow: 1;
+        padding: 20px;
+    }
+    .vista {
+        display: none; /* Ocultar todas las secciones por defecto */
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #ecf0f1;
+        border: 1px solid #bdc3c7;
+        border-radius: 4px;
+    }
+    .content-header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+</style>
+
+<div class="sidebar">
+    <div class="sidebar-logo">Auditoría</div>
+    <ul class="sidebar-menu">
+        <li><button onclick="mostrarSeccion(1)" class="contenido">Configuración de Procesamiento</button></li>
+        <li><button onclick="mostrarSeccion(2)" class="contenido">Registro de Imágenes Generadas</button></li>
+        <li><button onclick="mostrarSeccion(3)" class="contenido">Agregar Usuarios</button></li>
+        <li><button onclick="mostrarSeccion(4)" class="contenido">Autorizar Usuarios</button></li>
+    </ul>
+</div>
+
+<div class="content">
+    <div class="content-header" >
+        <section class="vista" id="seccion1" style="display: block;">
+            <div class="admin-wrapper">
+                <div class="admin-panel">
+                    <div class="panel-header">
+                        <h1 class="panel-title">Configuración de Procesamiento</h1>
+                        <p class="panel-subtitle">Ajuste los parámetros de procesamiento de imágenes</p>
+                    </div>
+                    
+                    <form action="{{ url_for('admin.admin') }}" method="post">
+                        <div class="form-group">
+                            <label for="output_folder" class="form-label">Ruta de Salida</label>
+                            <input type="text" id="output_folder" name="output_folder" 
+                                   class="form-input" value="{{ config.output_folder }}" 
+                                   placeholder="/path/to/output/folder" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="output_size_width" class="form-label">Ancho de Imagen</label>
+                            <input type="number" id="output_size_width" name="output_size_width" 
+                                   class="form-input" value="{{ config.output_size_width }}" 
+                                   placeholder="Ancho en píxeles" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="output_size_height" class="form-label">Alto de Imagen</label>
+                            <input type="number" id="output_size_height" name="output_size_height" 
+                                   class="form-input" value="{{ config.output_size_height }}" 
+                                   placeholder="Alto en píxeles" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Guardar Configuración</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <section class="vista" id="seccion2">
+            {% include 'image_processing_logs.html' %}
+        </section>
+        <section class="vista" id="seccion3">
+            <style>
+                .User{
+                    width: 90%;
+                    margin: 0 auto;
+                }
+            </style>
+            
+            <form class="User" action="/addusers" method="POST">
+                <label class="labeluser" for="nombre">Ingrese el nombre de usuario</label>
+                <input class="inputuser" type="text" id="nombre" name="nombre" placeholder="Ingrese un nombre" required autofocus>
+            
+                <label class="labeluser" for="contraseña">Ingrese una contraseña para el usuario</label>
+                <input class="inputuser" type="password" id="contraseña" name="contraseña" placeholder="Ingrese una contraseña" required>
+            
+                <label class="labeluser" for="rango">Ingrese un rango para el usuario:</label>
+                <select class="inputuser" name="rango" id="rango" required>
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            
+                <button type="submit" class="btn">Agregar Usuario</button>
+            </form>
+
+            
+        </section>
+        <section class="vista" id="seccion4">
+            {% include 'autorizacion.html' %}
+        </section>
+    </div>
+
+    <div class="content-body">
+        <!-- Aquí puedes agregar contenido adicional -->
+    </div>
+</div>
+
+<script>
+    function mostrarSeccion(numero) {
+        // Ocultar todas las secciones
+        const secciones = document.querySelectorAll('.vista');
+        secciones.forEach(seccion => {
+            seccion.style.display = 'none';
+        });
+
+        // Mostrar la sección seleccionada
+        const seccionSeleccionada = document.getElementById(`seccion${numero}`);
+        if (seccionSeleccionada) {
+            seccionSeleccionada.style.display = 'block';
+        }
+    }
+</script>
+
+{% endblock %}

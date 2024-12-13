@@ -1,5 +1,7 @@
 {% extends 'layout.html'%}
 {% block content %}
+
+
 <form class="generator" action="{{ url_for('generator.generator') }}" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label for="input_files" class="form-label">Seleccionar imágenes</label>
