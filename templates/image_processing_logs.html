@@ -1,14 +1,12 @@
-
 {% block content %}
-<div class="page-wrapper image-history-container">
-    <header class="page-header">
+    <div class="page-wrapper image-history-container">
         <h1 class="page-title image-history-title">Historial de Procesamiento de Imágenes</h1>
-    </header>
 
-    <div class="content-section image-history-content">
-        {% if logs %}
+        <div class="content-section image-history-content">
+            {% if logs %}
             <div class="table-responsive">
-                <table class="custom-table image-history-table table-hover" style="max-height: 400px; overflow-y: auto; display: block; width: 100%;">
+                <table class="custom-table image-history-table table-hover"
+                    style="max-height: 400px; overflow-y: auto; display: block; width: 100%;">
                     <thead class="table-header">
                         <tr>
                             <th class="column-date">Fecha y Hora</th>
@@ -33,11 +31,11 @@
                     </tbody>
                 </table>
             </div>
-        {% else %}
+            {% else %}
             <div class="empty-state">
                 <p class="empty-message">No hay registros de procesamiento de imágenes.</p>
             </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
-{% endblock %}
+{% endblock%}

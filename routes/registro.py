@@ -35,4 +35,7 @@ def image_processing_logs(cursor):
     """)
     logs = cursor.fetchall()
 
-    return render_template('image_processing_logs.html', logs=logs, titulo=titulo)
+    return render_template('administracion.html', logs=logs, 
+                                                titulo=titulo, 
+                                    active_section='image_processing_logs')
+                                

@@ -48,4 +48,6 @@ def usuarios():
         finally:
             conn.close()
 
-    return render_template('administracion.html', titulo=titulo)
+    return render_template('administracion.html', 
+                            titulo=titulo,
+                            active_section='usuarios')
