@@ -1,41 +1,46 @@
 {% block content %}
-    <div class="page-wrapper image-history-container">
-        <h1 class="page-title image-history-title">Historial de Procesamiento de Imágenes</h1>
+<div class="page-wrapper image-history-container">
+    <h1 class="page-title image-history-title">Historial de Procesamiento de Imágenes</h1>
 
-        <div class="content-section image-history-content">
-            {% if logs %}
-            <div class="table-responsive">
-                <table class="custom-table image-history-table table-hover"
-                    style="max-height: 400px; overflow-y: auto; display: block; width: 100%;">
-                    <thead class="table-header">
-                        <tr>
-                            <th class="column-date">Fecha y Hora</th>
-                            <th class="column-image">Imagen</th>
-                            <th class="column-image">Creador</th>
-                            <th class="column-image">Rutas de salida</th>
+    <div class="content-section image-history-content">
+        <form method="GET" action="{{ url_for('registro.image_processing_logs') }}" class="search-form">
+            <input type="text" name="query" class="search-input" placeholder="Buscar por nombre de imagen"
+                value="{{ request.args.get('query', '') }}">
+            <button type="submit" class="search-button">Buscar</button>
+        </form>
 
-                        </tr>
-                    </thead>
-                    <tbody class="table-body">
-                        {% for log in logs %}
-                        <tr class="table-row {{ 'row-even' if loop.index is divisibleby(2) else 'row-odd' }}">
-                            <td class="cell-date">{{ log.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                            <td class="cell-image">{{ log.nombre_imagen }}</td>
-                            <td class="=cell-image">{{ log.usuario }} </td>
-                            <td class="cell-actions">
-                                <div class="action-buttons">
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="empty-state">
-                <p class="empty-message">No hay registros de procesamiento de imágenes.</p>
-            </div>
-            {% endif %}
+        {% if logs %}
+        <div class="table-responsive">
+            <table class="custom-table image-history-table table-hover"
+                style="height: 400px; overflow-y: auto; display: block; width: 1000px;">
+                <thead class="table-header">
+                    <tr>
+                        <th class="column-date">Fecha y Hora</th>
+                        <th class="column-image">Imagen</th>
+                        <th class="column-image">Creador</th>
+                        <th class="column-image">Rutas de salida</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    {% for log in logs %}
+                    <tr class="table-row {{ 'row-even' if loop.index is divisibleby(2) else 'row-odd' }}">
+                        <td class="cell-date">{{ log.fecha.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td class="cell-image">{{ log.nombre_imagen }}</td>
+                        <td class="cell-image">{{ log.usuario }}</td>
+                        <td class="cell-actions">
+                            <div class="action-buttons">
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+        {% else %}
+        <div class="empty-state">
+            <p class="empty-message">No hay registros de procesamiento de imágenes.</p>
+        </div>
+        {% endif %}
     </div>
-{% endblock%}
+</div>
+{% endblock %}

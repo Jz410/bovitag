@@ -1,6 +1,7 @@
-
+/* Importación de fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
+/* Variables de color y estilo */
 :root {
     --bg-primary: #f3f4f6;
     --bg-secondary: #ffffff;
@@ -15,37 +16,25 @@
     --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
-}
-
+/* Contenedor principal */
 .container {
-    width: 1000px;
+    width: 950px;
     margin: 0 auto;
-    height: 10px;
+    padding: 1rem;
+    max-height: 650px;
+    padding: 3%;
 }
 
-/* Flash Messages */
+/* Mensajes emergentes (Flash Messages) */
 .flash-messages {
     position: fixed;
     top: 1rem;
-    right: 1rem;
     z-index: 1000;
     width: 300px;
 }
 
 .alert {
     background-color: var(--bg-secondary);
-    border-left: 5px solid transparent;
     border-radius: 8px;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -76,7 +65,7 @@ body {
     color: var(--text-primary);
 }
 
-/* User Table */
+/* Tabla de usuarios */
 .table-container {
     background-color: var(--bg-secondary);
     border-radius: 12px;
@@ -93,7 +82,6 @@ body {
 .table thead {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     position: relative;
-    overflow: hidden;
 }
 
 .table thead::before {
@@ -104,37 +92,35 @@ body {
     right: 0;
     bottom: 0;
     background: linear-gradient(45deg, 
-        rgba(255,255,255,0.1) 0%, 
-        rgba(255,255,255,0.05) 50%, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
         transparent 100%
     );
     pointer-events: none;
 }
 
-.table thead tr {
-    position: relative;
-    z-index: 1;
-}
-
 .table th {
     padding: 1.2rem 1rem;
-    text-align: left;
+    text-align: center;
     color: white;
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.9rem;
     letter-spacing: 0.05em;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.2s;
+    position: relative;
 }
 
 .table th:hover {
     transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .table td {
     padding: 1rem;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid var(--border-color);
+    word-wrap: break-word;
 }
 
 .table tbody tr {
@@ -145,7 +131,7 @@ body {
     background-color: rgba(59, 130, 246, 0.025);
 }
 
-/* Status Badge */
+/* Badges para estados */
 .badge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
@@ -165,7 +151,7 @@ body {
     color: var(--accent-red);
 }
 
-/* Buttons */
+/* Botones */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -190,13 +176,40 @@ body {
     color: white;
 }
 
+.btn-primary {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: white;
+}
+
 .btn:hover {
     opacity: 0.9;
     transform: translateY(-2px);
     box-shadow: var(--shadow-subtle);
 }
 
-/* Animations */
+/* Formularios */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.5em;
+    padding-right: 2.5rem;
+}
+
+/* Animaciones */
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -208,18 +221,22 @@ body {
     }
 }
 
-/* Responsive Design */
+/* Diseño responsive */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
     }
 
     .table {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
     .flash-messages {
         width: calc(100% - 2rem);
         right: 1rem;
+    }
+
+    .table th, .table td {
+        padding: 0.8rem 0.5rem;
     }
 }

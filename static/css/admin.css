@@ -5,7 +5,7 @@
     --text-dark: #2c3e50;
 }
 
-
+/* General Layout */
 .admin-wrapper {
     display: flex;
     justify-content: center;
@@ -47,9 +47,20 @@
     font-size: 0.95rem;
 }
 
+/* Form Styling */
+.admin-form {
+    width: 100%;
+}
+
 .form-group {
     margin-bottom: 25px;
     position: relative;
+}
+
+.form-group-output-folder,
+.form-group-output-width,
+.form-group-output-height {
+    margin-bottom: 30px;
 }
 
 .form-label {
@@ -74,6 +85,12 @@
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
 }
 
+.form-input-output-folder,
+.form-input-output-width,
+.form-input-output-height {
+    background-color: var(--background-light);
+}
+
 .submit-btn {
     width: 100%;
     padding: 14px;
@@ -94,6 +111,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.admin-submit-btn {
+    font-size: 1rem;
+}
+
+/* Responsive Design */
 @media screen and (max-width: 600px) {
     .admin-panel {
         padding: 25px;

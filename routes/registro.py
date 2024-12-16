@@ -18,24 +18,36 @@ from config.config import Config
 registro_bp = Blueprint('registro', __name__)
 
 
-@registro_bp.route('/image_processing_logs')
+@registro_bp.route('/image_processing_logs', methods=['GET'])
 @admin_required
 @db_operation
 def image_processing_logs(cursor):
-    titulo: str = 'Registro de procesamientos'
+    titulo = 'Registro de procesamientos'
     if 'user_id' not in session:
         flash("Debes iniciar sesión para acceder", "warning")
         return redirect('/login')
 
-    # Fetch all logs, not filtered by user_id
-    cursor.execute("""
-        SELECT r.id, r.nombre_imagen, r.fecha, r.usuario_nombre as usuario 
-        FROM registros r
-        ORDER BY r.fecha DESC
-    """)
+    # Obtener el valor de búsqueda de los parámetros de consulta
+    query = request.args.get('query', '').strip()
+
+    # Construir la consulta SQL con filtro
+    if query:
+        cursor.execute("""
+            SELECT r.id, r.nombre_imagen, r.fecha, r.usuario_nombre as usuario
+            FROM registros r
+            WHERE r.nombre_imagen LIKE %s
+            ORDER BY r.fecha DESC
+        """, (f"%{query}%",))
+    else:
+        cursor.execute("""
+            SELECT r.id, r.nombre_imagen, r.fecha, r.usuario_nombre as usuario
+            FROM registros r
+            ORDER BY r.fecha DESC
+        """)
+
     logs = cursor.fetchall()
 
     return render_template('administracion.html', logs=logs, 
                                                 titulo=titulo, 
-                                    active_section='image_processing_logs')
-                                
+                                    active_section='image_processing_logs', 
+                                    query=query)

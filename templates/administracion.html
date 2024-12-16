@@ -8,6 +8,7 @@
         <li><a href="{{ url_for('users.usuarios') }}" class="contenido">Agregar Usuarios</a></li>
         <li><a href="{{ url_for('autorizacion.autorizacion') }}" class="contenido">Autorizar Usuarios</a></li>
         <li><a href="{{ url_for('registro.image_processing_logs') }}" class="contenido">Logs de Procesamiento</a></li>
+        <li><a href="{{ url_for('password.cambiar_contrasena') }}" class="contenido">Logs de Procesamiento</a></li>
 
     </ul>
 </div>
@@ -26,6 +27,11 @@
 
             {% elif active_section == 'image_processing_logs' %}
             {% include 'image_processing_logs.html' %}
+
+            {% elif active_section == 'cambiar_contrasena' %}
+            {% include 'password.html' %}
+
+             
             
             {% endif %}
         </div>

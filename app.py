@@ -15,6 +15,8 @@ from routes.preview import preview_bp , move_images_bp
 from routes.registro import registro_bp
 from routes.autorizacion import autorizacion_bp
 from routes.administracion import administracion_bp
+from routes.password import password_bp
+
 
 app = Flask(__name__)
 app.secret_key = key
@@ -29,9 +31,10 @@ app.register_blueprint(preview_bp)
 app.register_blueprint(login_bp)
 app.register_blueprint(inicio_bp)
 app.register_blueprint(users_bp)
-app.register_blueprint(autorizacion_bp)
 app.register_blueprint(registro_bp)
+app.register_blueprint(autorizacion_bp)
 app.register_blueprint(administracion_bp)
+app.register_blueprint(password_bp)
 
 
 
