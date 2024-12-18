@@ -16,7 +16,7 @@ def cambiar_contrasena():
     # Verificar si el usuario está logueado
     if 'user_id' not in session:
         flash("Debes iniciar sesión para acceder a esta función.", "warning")
-        return redirect(url_for('login'))
+        return redirect(url_for('login.inicio'))
     
     # Obtener la conexión a la base de datos
     conn = get_db_connection()

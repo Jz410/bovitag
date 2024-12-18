@@ -1,4 +1,7 @@
 {% block content %}
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/autorizacion.css') }}">
+</head>
 
 <!-- Flash Messages Section -->
 <div class="container" style="display: none;">
@@ -14,6 +17,16 @@
     </div>
     {% endif %}
     {% endwith %}
+</div>
+
+<!-- Search Form -->
+<div class="container" style="width: 90%; margin-bottom: 20px;">
+    <form method="GET" action="{{ url_for('autorizacion.autorizacion') }}">
+        <div class="input-group">
+            <input type="text" name="search" class="form-control" placeholder="Buscar por nombre" value="{{ request.args.get('search', '') }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+    </form>
 </div>
 
 <!-- User Management Table -->
@@ -42,7 +55,6 @@
                     </td>
                     <td>
                         <form action="{{ url_for('autorizacion.autorizacion') }}" method="POST">
-                            <!-- Enviar el user_id como un campo oculto -->
                             <input type="hidden" name="user_id" value="{{ usuario.id }}">
                             <button type="submit" class="btn btn-{{ 'danger' if usuario.activo else 'success' }}">
                                 {{ 'Deshabilitar' if usuario.activo else 'Habilitar' }}
