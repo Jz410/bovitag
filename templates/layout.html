@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/Generador.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Global.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/preview.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/autorizacion.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/administracion.css')}}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo-Mag.jfif')}}" type="image/x-icon">
     
 
@@ -43,7 +40,7 @@
     <div class="barrita"></div>
 
 
-    <main>
+    <main class="Main">
         {% block content %}
             <!--Contenido se mostrara aquí-->
         {% endblock%}
@@ -55,7 +52,7 @@
         <section class="Informacion">
             
             <p>
-                <img src="{{ url_for('static', filename='Img/favicon.ico')}}" alt="" class="Logito"> Esta página web ha sido desarrollada por el equipo de desarrollo Jz Company Sv.
+                <img src="{{ url_for('static', filename='Img/JzHd.png')}}" alt="Logo de JZ Company Sv" class="Logito"> Esta página web ha sido desarrollada por el equipo de desarrollo Jz Company Sv.
                 Para obtener más información sobre nuestro equipo y servicios, visita el siguiente enlace: <a href="https://maps.app.goo.gl/kuXwjRXEWtRBxndv6" target="_blank">Jz Company Sv</a>.
             </p>
             <p>
@@ -66,6 +63,7 @@
             <div class="Info">
                 <span>Redes sociales</span>
                 <a href="https://github.com/Jz410" target="_blank">Git Hub</a>
+                <a href="https://jzcompanysv.pythonanywhere.com/" target="_blank">Pagina web</a>
             </div>
             <div class="Info">
                 <span>Personal</span>

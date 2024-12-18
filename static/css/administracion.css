@@ -1,58 +1,71 @@
+.alll {
+    display: flex;
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    margin: 50px;
+    align-items: center;
+    justify-content: center;
+}
 
-    .alll{
-        display: flex;
-        width: 100%;
-    }
-       main {
-        display: flex;
-        
-        flex-direction: row;    
+.Main {
+    display: flex;
+    flex-direction: row;
 
-    }
-    .sidebar {
-        width: 200px;
-        background: #2c3e50;
-        color: white;
-        padding: 20px;
-    }
-    .sidebar-logo {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-    }
-    .sidebar-menu li {
-        margin: 10px 0;
-    }
-    .sidebar-menu a {
-        color: white;
-        text-decoration: none;
-        font-size: 14px;
-        display: block;
-        padding: 10px;
-        background: #34495e;
-        border-radius: 4px;
-    }
-    .sidebar-menu a:hover {
-        background: #1abc9c;
-    }
-    .content {
-        flex-grow: 1;
-        width: 80%;
-    }
-    .vista {
-        display: none; /* Ocultar todas las secciones por defecto */
-        margin-bottom: 20px;
-        padding: 20px;
-        background: #ecf0f1;
-        border: 1px solid #bdc3c7;
-        border-radius: 4px;
-    }
-    .content-header h1 {
-        margin: 0;
-        font-size: 24px;
-    }
+}
 
+.sidebar {
+    width: 200px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar-logo {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin: 10px 0;
+}
+
+.sidebar-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    padding: 10px;
+    background: #34495e;
+    border-radius: 4px;
+}
+
+.sidebar-menu a:hover {
+    background: #1abc9c;
+}
+
+.content {
+    flex-grow: 1;
+    width: 80%;
+}
+
+.vista {
+    display: none;
+    /* Ocultar todas las secciones por defecto */
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #ecf0f1;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+}
+
+.content-header h1 {
+    margin: 0;
+    font-size: 24px;
+}

@@ -1,6 +1,10 @@
 {% extends 'layout.html'%}
+
 {% block content %}
 
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Generador.css')}}">
+</head>
 
 <form class="generator" action="{{ url_for('generator.generator') }}" method="post" enctype="multipart/form-data">
     <div class="form-group">

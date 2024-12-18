@@ -1,11 +1,9 @@
 
 {% block content %}
-<style>
-    .User{
-        width: 90%;
-        margin: 0 auto;
-    }
-</style>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css')}}">
+</head>
 
 <form class="User" action="/addusers" method="POST">
     <label class="labeluser" for="nombre">Ingrese el nombre de usuario</label>

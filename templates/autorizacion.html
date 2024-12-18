@@ -1,7 +1,7 @@
 {% block content %}
 
 <!-- Flash Messages Section -->
-<div class="container">
+<div class="container" style="display: none;">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <div class="flash-messages">
@@ -17,7 +17,7 @@
 </div>
 
 <!-- User Management Table -->
-<div class="container">
+<div class="container" style="width: 90%; flex-direction: column;">
     <div class="table-container">
         <table class="table">
             <thead>
