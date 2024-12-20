@@ -5,136 +5,141 @@
 :root {
     --bg-primary: #f3f4f6;
     --bg-secondary: #ffffff;
-    --text-primary: #111827;
-    --text-secondary: #6b7280;
+    --text-primary: #1f2937;
+    --text-secondary: #4b5563;
     --gradient-start: #3b82f6;
     --gradient-end: #6366f1;
     --accent-green: #10b981;
     --accent-red: #ef4444;
     --border-color: #e5e7eb;
-    --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-    --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --transition-speed: 0.3s;
 }
 
-/* Contenedor principal */
+/* Reset y estilos base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Contenedor principal responsivo */
 .container {
-    width: 950px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
-    max-height: 650px;
-    padding: 3%;
 }
 
-/* Mensajes emergentes (Flash Messages) */
-.flash-messages {
-    position: fixed;
-    top: 1rem;
-    z-index: 1000;
-    width: 300px;
-}
-
-.alert {
-    background-color: var(--bg-secondary);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow-subtle);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    animation: slideIn 0.4s ease;
-}
-
-.alert-success {
-    border-left-color: var(--accent-green);
-}
-
-.alert-danger {
-    border-left-color: var(--accent-red);
-}
-
-.btn-close {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.btn-close:hover {
-    color: var(--text-primary);
-}
-
-/* Tabla de usuarios */
+/* Tabla responsiva */
 .table-container {
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: var(--shadow-medium);
-    overflow: hidden;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
+    min-width: 300px;
 }
 
 .table thead {
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
-.table thead::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, 
-        rgba(255, 255, 255, 0.1) 0%, 
-        rgba(255, 255, 255, 0.05) 50%, 
-        transparent 100%
-    );
-    pointer-events: none;
+.table th, .table td {
+    padding: 0.75rem;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed) ease;
 }
 
 .table th {
-    padding: 1.2rem 1rem;
-    text-align: center;
     color: white;
-    font-weight: 700;
+    font-size: 0.875rem;
     text-transform: uppercase;
-    font-size: 0.9rem;
     letter-spacing: 0.05em;
-    transition: transform 0.3s ease, background-color 0.2s;
-    position: relative;
-}
-
-.table th:hover {
-    transform: scale(1.05);
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.table td {
-    padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid var(--border-color);
-    word-wrap: break-word;
-}
-
-.table tbody tr {
-    transition: background-color 0.2s;
 }
 
 .table tbody tr:hover {
-    background-color: rgba(59, 130, 246, 0.025);
+    background-color: rgba(59, 130, 246, 0.05);
 }
 
-/* Badges para estados */
+/* Botones responsivos */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    color: white;
+}
+
+.btn-success {
+    background-color: var(--accent-green);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--accent-red);
+    color: white;
+}
+
+/* Formularios responsivos */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--gradient-start);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Badges responsivos */
 .badge {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 600;
@@ -151,92 +156,159 @@
     color: var(--accent-red);
 }
 
-/* Botones */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-}
-
-.btn-success {
-    background-color: var(--accent-green);
-    color: white;
-}
-
-.btn-danger {
-    background-color: var(--accent-red);
-    color: white;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-    color: white;
-}
-
-.btn:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-subtle);
-}
-
-/* Formularios */
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-control {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 1rem;
-}
-
-select.form-control {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 1.5em;
-    padding-right: 2.5rem;
-}
-
-/* Animaciones */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(20px);
+/* Responsive Breakpoints */
+/* Extra small devices (phones, menos de 576px) */
+@media screen and (max-width: 575.98px) {
+    html {
+        font-size: 14px;
     }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
 
-/* Diseño responsive */
-@media (max-width: 768px) {
     .container {
-        padding: 1rem;
+        padding: 0.5rem;
     }
 
     .table {
-        font-size: 0.85rem;
-    }
-
-    .flash-messages {
-        width: calc(100% - 2rem);
-        right: 1rem;
+        font-size: 0.75rem;
     }
 
     .table th, .table td {
-        padding: 0.8rem 0.5rem;
+        padding: 0.5rem;
     }
+
+    .btn {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .form-control {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .badge {
+        font-size: 0.6rem;
+    }
+}
+
+/* Small devices (landscape phones, 576px y más) */
+@media screen and (min-width: 576px) and (max-width: 767.98px) {
+    html {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 0.75rem;
+    }
+}
+
+/* Medium devices (tablets, 768px y más) */
+@media screen and (min-width: 768px) and (max-width: 991.98px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+/* Large devices (desktops, 992px y más) */
+@media screen and (min-width: 992px) and (max-width: 1199.98px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px y más) */
+@media screen and (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+/* Mejoras de accesibilidad */
+@media (max-width: 991.98px) {
+    .btn, 
+    .form-control {
+        min-height: 44px; /* Tamaño mínimo para objetivos táctiles */
+    }
+}
+
+/* Soporte para orientación horizontal */
+@media screen and (max-width: 991.98px) and (orientation: landscape) {
+    html {
+        font-size: 14px;
+    }
+
+    .table-container {
+        max-height: 350px;
+        overflow-y: auto;
+    }
+}
+
+
+
+
+
+/* Custom Scrollbar Styling */
+/* Webkit browsers (Chrome, Safari, newer versions of Opera) */
+::-webkit-scrollbar {
+    width: 10px;  /* Vertical scrollbar width */
+    height: 10px; /* Horizontal scrollbar height */
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Light background for the track */
+    border-radius: 10px;
+}
+
+/* Scrollbar Handle */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6, #6366f1); /* Gradient color matching the design */
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+/* Scrollbar Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2563eb, #4f46e5); /* Slightly darker gradient on hover */
+}
+
+/* Firefox scrollbar support */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #3b82f6 #f1f1f1;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ensure scrollbar works on different containers */
+.scrollable-container {
+    overflow-y: auto;
+    max-height: 400px; /* Adjust as needed */
+}
+
+/* Table-specific scrollbar */
+.table-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Horizontal scroll for tables */
+.table-container:hover {
+    overflow-x: auto;
+}
+
+/* Mobile and touch device optimizations */
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 6px;  /* Thinner scrollbar for mobile */
+        height: 6px;
+    }
+}
+
+/* Prevent overscroll bouncing on some browsers */
+body {
+    overscroll-behavior-y: contain;
 }

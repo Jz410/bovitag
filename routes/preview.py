@@ -37,19 +37,15 @@ def move_images():
     # Extract form data
     selected_images = request.form.getlist('selected_images')
     output_folder = request.form.get('output_folder')
+    downloads_folder = os.path.expanduser('~/Downloads')  # Default downloads folder
    
     # Debug: Print out received paths
     print(f"Output Folder Path: {output_folder}")
     print(f"Selected Images: {selected_images}")
    
-    # Validate folder selection
-    if not selected_images:
-        flash("Por favor, seleccione imágenes para mover.", "warning")
-        return render_template('generator.html')
-   
-    # Prepare ZIP file path
+    # Prepare ZIP file path in downloads folder
     zip_filename = "imagenes_seleccionadas.zip"
-    zip_filepath = os.path.join(output_folder, zip_filename)
+    zip_filepath = os.path.join(downloads_folder, zip_filename)
    
     try:
         # Create ZIP file with selected images
@@ -57,13 +53,18 @@ def move_images():
             for image_name in selected_images:
                 src_path = os.path.join(output_folder, image_name)
                 if os.path.exists(src_path):
+                    # Add the image to the ZIP file
                     zipf.write(src_path, arcname=secure_filename(image_name))
-                else:
-                    flash(f"Archivo no encontrado: {image_name}", "warning")
-       
+        
+        # Attempt to remove images only if zip creation is successful
+        for image_name in selected_images:
+            src_path = os.path.join(output_folder, image_name)
+            if os.path.exists(src_path):
+                os.remove(src_path)
+
         # Send the ZIP file to the client
         return send_file(zip_filepath, as_attachment=True)
    
     except Exception as e:
-        flash(f"Error al generar el archivo ZIP: {str(e)}", "error")
+        flash(f"Error al procesar las imágenes: {str(e)}", "error")
         return render_template('generator.html')

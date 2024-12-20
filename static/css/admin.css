@@ -12,6 +12,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .admin-panel {
@@ -19,7 +21,7 @@
     border-radius: 12px;
     box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
     width: 100%;
-    min-width: 650px;
+    max-width: 650px;
     padding: 40px;
     transition: all 0.3s ease;
 }
@@ -47,12 +49,11 @@
 }
 
 .form-group {
-
     position: relative;
 }
 
-.form-group-output-folder,
-.form-group-output-width,
+.form-group-output-folder, 
+.form-group-output-width, 
 .form-group-output-height {
     margin-bottom: 30px;
 }
@@ -71,6 +72,7 @@
     border-radius: 8px;
     font-size: 0.95rem;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .form-input:focus {
@@ -79,8 +81,8 @@
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
 }
 
-.form-input-output-folder,
-.form-input-output-width,
+.form-input-output-folder, 
+.form-input-output-width, 
 .form-input-output-height {
     background-color: var(--background-light);
 }
@@ -110,8 +112,81 @@
 }
 
 /* Responsive Design */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
+    .admin-wrapper {
+        padding: 10px;
+    }
+
     .admin-panel {
-        padding: 25px;
+        min-width: 100%;
+        padding: 20px;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .panel-title {
+        font-size: 1.5rem;
+    }
+
+    .panel-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .form-input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .submit-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Ultra-Small Devices */
+@media screen and (max-width: 480px) {
+    .admin-wrapper {
+        padding: 5px;
+    }
+
+    .admin-panel {
+        padding: 15px;
+    }
+
+    .panel-header {
+        margin-bottom: 20px;
+    }
+
+    .panel-title {
+        font-size: 1.3rem;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .form-input {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .submit-btn {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Accessibility and Touch-Friendly Enhancements */
+@media (max-width: 768px) {
+    /* Increase touch target sizes */
+    .submit-btn,
+    .form-input {
+        min-height: 44px; /* WCAG recommendation for touch targets */
     }
 }
