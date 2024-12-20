@@ -19,18 +19,21 @@
     {% endwith %}
 </div>
 
-<!-- Search Form -->
+
+
+<!-- User Management Table -->
+<div class="container" style="width: 90%; flex-direction: column;">
+    <!-- Search Form -->
 <div class="container" style="width: 90%; margin-bottom: 20px;">
+
     <form method="GET" action="{{ url_for('autorizacion.autorizacion') }}">
-        <div class="input-group">
+        <div class="input-group" style="display: flex;">
             <input type="text" name="search" class="form-control" placeholder="Buscar por nombre" value="{{ request.args.get('search', '') }}">
             <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
     </form>
 </div>
 
-<!-- User Management Table -->
-<div class="container" style="width: 90%; flex-direction: column;">
     <div class="table-container">
         <table class="table">
             <thead>
