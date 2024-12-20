@@ -2,14 +2,16 @@ import pymysql
 from werkzeug.security import generate_password_hash
 import argparse
 
+# Este código Usar solo 1 vez y borrarlo o guardarlo en otro lado
+
 def insertar_usuario(nombre: str, contraseña: str, rango: str):
     try:
-        # Conexión a la base de datos
+        # Conexión a la base de datos Ejemplo
         conn = pymysql.connect(
             host='localhost',  # Cambia si usas otro host
             user='root',
-            password='',
-            database='bovitag1'
+            password='1234',
+            database='bovitag'
         )
         with conn.cursor() as cursor:
             # Generar hash de la contraseña
