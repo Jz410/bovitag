@@ -1,7 +1,8 @@
 import pymysql
 from werkzeug.security import generate_password_hash
+import argparse
 
-def insertar_usuario(nombre:str, contraseña:str, rango:str):
+def insertar_usuario(nombre: str, contraseña: str, rango: str):
     try:
         # Conexión a la base de datos
         conn = pymysql.connect(
@@ -25,5 +26,18 @@ def insertar_usuario(nombre:str, contraseña:str, rango:str):
     finally:
         conn.close()
 
-# Crear usuario inicial
-insertar_usuario('jairos', '1234', 'admin')  # Cambia los valores según necesites
+if __name__ == "__main__":
+    # Configurar el parser de argumentos
+    parser = argparse.ArgumentParser(description="Agregar un usuario a la base de datos.")
+    parser.add_argument("nombre", type=str, help="El nombre del usuario.")
+    parser.add_argument("contraseña", type=str, help="La contraseña del usuario.")
+    parser.add_argument("rango", type=str, help="El rango del usuario.")
+
+    # Parsear los argumentos
+    args = parser.parse_args()
+
+    # Llamar a la función con los argumentos proporcionados
+    insertar_usuario(args.nombre, args.contraseña, args.rango)
+
+
+# python add_user.py "jairo" "1234" "admin"     // asi es como se llamaría desde terminal
