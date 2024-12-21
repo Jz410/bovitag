@@ -5,25 +5,59 @@
 
     <h1 class="preview">Seleccionar imágenes generadas</h1>
     
-    <form action="/move_images" method="post" class="preview-imgs">
+    <form action="/move_images" method="post" class="preview-imgs" onsubmit="return validarSeleccion()">
         <div class="preview-imgs-e">
         {% for image in images %}
-       
             <div class="preview-imgs-a">
                 <input type="checkbox" 
                        name="selected_images" 
                        value="{{ image }}" 
-                       id="{{ image }}">
+                       id="{{ image }}" 
+                       onclick="toggleButtonVisibility()">
                 <label for="{{ image }}">{{ image }}</label><br>
                 <img src="{{ url_for('preview.get_image_preview', filename=image, folder=output_folder) }}" alt="{{ image }}">
             </div>
-
         {% endfor %}
         </div>
         
         <label class="preview" for="custom_folder">Carpeta personalizada (opcional):</label>
 
         <input type="hidden" name="output_folder" value="{{ output_folder }}">
-        <button class="preview" type="submit">Descargar imagenes seleccionadas en .zip</button>
+        
+        <!-- Botón de enviar siempre visible -->
+        <button class="preview" type="submit">
+            Mandar formulario
+        </button>
+        
+        <!-- Botón de descarga inicialmente oculto -->
+        <button class="preview" id="downloadButton" type="submit" style="display:none;">
+            Descargar imágenes seleccionadas en .zip
+        </button>
+        
     </form>
+
+    <script>
+        function toggleButtonVisibility() {
+            const checkboxes = document.querySelectorAll('input[name="selected_images"]:checked');
+            const downloadButton = document.getElementById('downloadButton');
+
+            if (checkboxes.length > 0) {
+                downloadButton.style.display = 'block';
+            } else {
+                downloadButton.style.display = 'none';
+            }
+        }
+
+        function validarSeleccion() {
+            const checkboxes = document.querySelectorAll('input[name="selected_images"]:checked');
+            
+            // Si no se selecciona ninguna imagen, enviar a /generator
+            if (checkboxes.length === 0) {
+                window.location.href = '/generator';
+                return false;  // Evita el envío normal del formulario
+            }
+            return true;  // Envía el formulario si hay selección
+        }
+    </script>
+
 {% endblock %}
