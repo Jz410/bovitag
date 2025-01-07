@@ -5,7 +5,7 @@ class Config:
     DB_CONFIG = {
         'host': "localhost",
         'user': "root",
-        'password': "",
+        'password': "7003",
         'database': "bovitag1",
         'cursorclass': 'DictCursor'
 }
